@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class FlyThroughController : MonoBehaviour {
 
@@ -17,15 +18,27 @@ public class FlyThroughController : MonoBehaviour {
 
 	[SerializeField]
 	GameObject groundCollider;
-	
-	// Use this for initialization
-	void Start () {
-		
-		InitQuery ();
-		
-	}
+	InputAction accelAction;
+	InputAction decreaseAction;
 
-	public void InitQuery () {
+	// Use this for initialization
+	void Start() {
+
+		InitQuery();
+        accelAction = InputSystem.actions["Accelarate"];
+        decreaseAction = InputSystem.actions["Decrease"];
+
+		accelAction.performed += OnAccel;
+		decreaseAction.performed += OnDecrease;
+
+    }
+    private void OnDestroy()
+    {
+        accelAction.performed -= OnAccel;
+		decreaseAction.performed -= OnDecrease;
+    }
+
+    public void InitQuery () {
 
 		speed = 0.0f;
 		nowFlyingState = QueryAnimationController.QueryChanAnimationType.FLY_IDLE;
@@ -47,15 +60,16 @@ public class FlyThroughController : MonoBehaviour {
 	{
 		CharacterController controller = GetComponent<CharacterController>();
 		
+		Vector2 move = InputSystem.actions["Move"].ReadValue<Vector2>();
 		// Rotate Right or Left
-		if (Input.GetAxis("Horizontal") != 0)
+		if (move.x != 0)
 		{
-			transform.Rotate(0, Input.GetAxis("Horizontal") * ROTATE_SPEED, 0);
-			if (Input.GetAxis("Horizontal") > 0)
+			transform.Rotate(0, move.x * ROTATE_SPEED, 0);
+			if (move.x > 0)
 			{
 				nowFlyingState = QueryAnimationController.QueryChanAnimationType.FLY_TORIGHT;
 			}
-			else if (Input.GetAxis("Horizontal") < 0)
+			else if (move.x < 0)
 			{ 
 				nowFlyingState = QueryAnimationController.QueryChanAnimationType.FLY_TOLEFT;
 			}
@@ -67,14 +81,14 @@ public class FlyThroughController : MonoBehaviour {
 		}
 		
 		// Rotate Up or Down
-		if (Input.GetAxis("Vertical") != 0)
+		if (move.y != 0)
 		{
-			transform.Translate(Vector3.up * Input.GetAxis("Vertical") * ROTATE_SPEED *  Time.deltaTime);
-			if (Input.GetAxis("Vertical") > 0)
+			transform.Translate(Vector3.up * move.y * ROTATE_SPEED *  Time.deltaTime);
+			if (move.y > 0)
 			{
 				nowFlyingState = QueryAnimationController.QueryChanAnimationType.FLY_UP;
 			}
-			else if (Input.GetAxis("Vertical") < 0)
+			else if (move.y < 0)
 			{ 
 				nowFlyingState = QueryAnimationController.QueryChanAnimationType.FLY_DOWN;
 			}
@@ -89,23 +103,6 @@ public class FlyThroughController : MonoBehaviour {
 		Vector3 forwardSpeed = transform.TransformDirection(Vector3.forward * Time.deltaTime * speed);
 		controller.Move (forwardSpeed);
 		
-		// Speed Control
-		if (Input.GetKey("x"))
-		{
-			speed += ACCELERATE * Time.deltaTime;
-			if (speed >  MAX_SPEED)
-			{
-				speed = MAX_SPEED;
-			}
-		}
-		else if (Input.GetKey("z"))
-		{
-			speed -= DECELERATE * Time.deltaTime;
-			if (speed < 0.0f)
-			{
-				speed = 0.0f;
-			}
-		}
 		
 		if (speed == 0.0f)
 		{
@@ -121,6 +118,22 @@ public class FlyThroughController : MonoBehaviour {
 		previousFlyingState = nowFlyingState;
 		
 	}
+	private void OnAccel(InputAction.CallbackContext context)
+	{
+        speed += ACCELERATE * Time.deltaTime;
+        if (speed > MAX_SPEED)
+        {
+            speed = MAX_SPEED;
+        }
+    }
+	private void OnDecrease(InputAction.CallbackContext context)
+	{
+        speed -= DECELERATE * Time.deltaTime;
+        if (speed < 0.0f)
+        {
+            speed = 0.0f;
+        }
+    }
 	
 
 	void OnGUI () {
