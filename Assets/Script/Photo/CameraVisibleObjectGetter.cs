@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraVisibleObjectGetter : MonoBehaviour
+public class CameraVisibleObjectGetter
 {
-    public List<GameObject> GetVisibleObjects(Camera cam, LayerMask targetLayer)
+    public static List<GameObject> GetVisibleObjects(Camera cam, LayerMask targetLayer)
     {
-        List<GameObject> result = new List<GameObject>();
+        List<GameObject> result = new();
 
-        GameObject[] allObjects = FindObjectsByType<GameObject>((FindObjectsSortMode)FindObjectsInactive.Exclude);
+        List<GameObject> allObjects = new();
+        GameObject.FindGameObjectsWithTag("photoTarget", allObjects);
 
         foreach (var obj in allObjects)
         {
@@ -24,6 +25,31 @@ public class CameraVisibleObjectGetter : MonoBehaviour
                 viewportPos.y >= 0 && viewportPos.y <= 1)
             {
                 result.Add(obj);
+            }
+        }
+
+        return result;
+    }
+    public static HashSet<GameObject> GetObjectsByRaycast(Camera cam, LayerMask mask, int resolution = 10)
+    {
+        HashSet<GameObject> result = new HashSet<GameObject>();
+
+        for (int x = 0; x < resolution; x++)
+        {
+            for (int y = 0; y < resolution; y++)
+            {
+                Vector3 viewport = new Vector3(
+                    (float)x / (resolution - 1),
+                    (float)y / (resolution - 1),
+                    0
+                );
+
+                Ray ray = cam.ViewportPointToRay(viewport);
+
+                if (Physics.Raycast(ray, out RaycastHit hit, 100f, mask))
+                {
+                    result.Add(hit.collider.gameObject);
+                }
             }
         }
 
