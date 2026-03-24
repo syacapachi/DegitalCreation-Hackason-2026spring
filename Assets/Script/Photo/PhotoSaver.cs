@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using UnityEngine;
 
-public class PhotoSaver
+public static class PhotoSaver
 {
     public static void SavePNG(Texture2D tex, string fileName)
     {

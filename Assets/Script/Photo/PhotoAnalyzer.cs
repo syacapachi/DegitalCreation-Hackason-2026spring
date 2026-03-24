@@ -16,12 +16,22 @@ public static class PhotoAnalyzer
         /// <summary>総合スコア（用途に応じて）</summary>
         public float totalScore;
 
-        public PhotoObjectInfo(GameObject obj, float center, float size)
+        // ===== UI用 =====
+        public Vector2 viewportPosition; // (0〜1)
+        public float viewportRadius;     // (0〜1基準)
+        public Color color;
+
+        public PhotoObjectInfo(GameObject obj, float center, float size, Vector2 position, float radius)
         {
             gameObject = obj;
             centerScore = center;
             sizeScore = size;
             totalScore = center * size;
+
+            viewportPosition = position;
+            viewportRadius = radius;
+            color = Color.Lerp(Color.red, Color.green, totalScore);
+
         }
         public override readonly string ToString()
         {
@@ -71,7 +81,7 @@ public static class PhotoAnalyzer
     public static HashSet<GameObject> GetObjectsByRaycast(Camera cam, LayerMask targetLayer, int resolution = 10)
     {
         HashSet<GameObject> result = new();
-
+        //画面を上下左右にresolution等分,そこの中心に向かってRayをとばす
         for (int x = 0; x < resolution; x++)
         {
             for (int y = 0; y < resolution; y++)
@@ -108,7 +118,9 @@ public static class PhotoAnalyzer
 
             // 8頂点取得
             Vector3[] points = new Vector3[8];
+            //縦横高さそれぞれの中心からの距離
             Vector3 ext = b.extents;
+            //中心の位置
             Vector3 cen = b.center;
 
             int i = 0;
@@ -116,6 +128,7 @@ public static class PhotoAnalyzer
                 for (int y = -1; y <= 1; y += 2)
                     for (int z = -1; z <= 1; z += 2)
                     {
+                        //縦横高さにそれぞれ-1,1をかけたものを中心に足す->8頂点
                         points[i++] = cen + Vector3.Scale(ext, new Vector3(x, y, z));
                     }
 
@@ -142,6 +155,8 @@ public static class PhotoAnalyzer
             // =========================
             // サイズスコア（0〜1）
             // =========================
+            float width = Mathf.Clamp01(maxX - minX);
+            float height = Mathf.Clamp01(maxY - minY);
             float size = Mathf.Clamp01((maxX - minX) * (maxY - minY));
 
             // =========================
@@ -149,7 +164,6 @@ public static class PhotoAnalyzer
             // =========================
             float centerX = (minX + maxX) * 0.5f;
             float centerY = (minY + maxY) * 0.5f;
-
             float dist = Vector2.Distance(
                 new Vector2(centerX, centerY),
                 new Vector2(0.5f, 0.5f)
@@ -157,11 +171,17 @@ public static class PhotoAnalyzer
 
             float centerScore = 1f - Mathf.Clamp01(dist * 2f);
 
-            // =========================
+            Vector2 vpPos = new Vector2(centerX, centerY);
+
+            // 半径：バウンディング円として計算
+            float radius = Mathf.Sqrt(width * width + height * height) * 0.5f;
+
             result.Add(new PhotoObjectInfo(
                 rend.gameObject,
                 centerScore,
-                size
+                size,
+                vpPos,
+                radius
             ));
         }
 

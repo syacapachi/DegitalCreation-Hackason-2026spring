@@ -1,9 +1,9 @@
-﻿using Syacapachi.Attribute;
-using UnityEngine;
-using UnityEngine.InputSystem;
-
+﻿using static Syacapachi.Camera.CameraCapture;
 namespace Syacapachi.Camera
 {
+    using Syacapachi.Attribute;
+    using UnityEngine;
+    using UnityEngine.InputSystem;
     public class PhotoCameraController : MonoBehaviour
     {
 
@@ -39,10 +39,10 @@ namespace Syacapachi.Camera
         {
             capture.Capture();
         }
-        private void OnCaptureComplete(Texture2D texture) 
+        private void OnCaptureComplete(PhotoData data) 
         {
-            manager.AddPhoto(texture, overridden);
-            viewer.Show(texture);
+            manager.AddPhoto(data.texture, overridden);
+            viewer.Show(data.texture);
             Debug.Log("capture success");
         }
         private void OnCaptureFailed()

@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using UnityEngine;
     using UnityEngine.Rendering;
 
@@ -33,6 +34,18 @@
                 this.timestamp = Time.timeAsDouble;
             }
         }
+        public class PhotoData
+        {
+            public readonly Texture2D texture;
+            public readonly byte[] bytes;
+            public readonly HashSet<PhotoAnalyzer.PhotoObjectInfo> info;
+            public PhotoData(Texture2D texture2D, byte[] bytes, HashSet<PhotoAnalyzer.PhotoObjectInfo> info)
+            {
+                texture = texture2D;
+                this.bytes = bytes;
+                this.info = info;
+            }
+        }
         
         [Header("Camera")]
         [SerializeField] private Camera targetCamera;
@@ -54,8 +67,7 @@
         // =========================
 
         public event Action OnShutter;
-        public event Action<Texture2D> OnCaptureComplete;
-        public event Action<byte[]> OnCaptureCompleteBytes;
+        public event Action<PhotoData> OnCaptureComplete;
         public event Action OnCaptureFailed;
 
         /// <summary>進捗通知（現在枚数, 総枚数）</summary>
@@ -170,7 +182,6 @@
             var visibleObj = PhotoAnalyzer.GetVisibleObject(targetCamera, 1<<LayerMask.NameToLayer("PhotoTarget"));
 
             DebugObject(visibleObj);
-            Debug.Log("Wait...?");
 
             yield return new WaitUntil(() => done);
 
@@ -182,11 +193,11 @@
                 Destroy(rt);
             }
 
+            PhotoData data = new PhotoData(result.texture, result.bytes, visibleObj);
             // 🎯 メインスレッドイベント
             if (result.success)
             {
-                OnCaptureComplete?.Invoke(result.texture);
-                OnCaptureCompleteBytes?.Invoke(result.bytes);
+                OnCaptureComplete?.Invoke(data);
             }
             else
             {
