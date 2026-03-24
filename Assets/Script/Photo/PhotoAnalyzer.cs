@@ -45,6 +45,7 @@ using Syacapachi.Controller;
                 {
                     return photo.Score * totalScore;
                 }
+                Debug.Log($"Dont Get Object{gameObject.name}");
                 return baseScore * totalScore;
             }
             public override readonly string ToString()

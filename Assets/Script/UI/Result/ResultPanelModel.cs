@@ -8,7 +8,7 @@ public class ResultPanelModel : MonoBehaviour
     [SerializeField] private PhotoManager photoManager;
     [SerializeField] private CameraCapture cameraCapture;
     
-    private int _totalScore = 0;
+    [SerializeField] float _totalScore = 0;
 
     private void Awake()
     {
@@ -55,7 +55,7 @@ public class ResultPanelModel : MonoBehaviour
 
         foreach (var info in data.info)
         {
-            _totalScore += (int)info.GetScore();
+            _totalScore += info.GetScore();
         }
     }
 
@@ -66,7 +66,7 @@ public class ResultPanelModel : MonoBehaviour
 
     public string ScoreText
     {
-        get { return _totalScore.ToString(); }
+        get { return _totalScore.ToString("n1"); }
     }
 
     [Header("Debug")]
