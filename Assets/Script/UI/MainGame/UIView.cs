@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIView : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class UIView : MonoBehaviour
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private TextMeshProUGUI infoText;
     [SerializeField] private GameObject resultPanel;
+    [SerializeField] private GameObject batteryGuage;
 
     public void SetCountdownText(string text)
     {
@@ -54,6 +56,18 @@ public class UIView : MonoBehaviour
         if (resultPanel == null)
         {
             Debug.LogWarning("UI/UIManagerのUIViewのresultPanel Inspectorを割り当ててください。");
+        }
+    }
+
+    public void SetBatteryGauge(float fillAmount)
+    {
+        if (batteryGuage != null)
+        {
+            Image img = batteryGuage.GetComponent<Image>();
+            if (img != null)
+            {
+                img.fillAmount = fillAmount;
+            }
         }
     }
 }

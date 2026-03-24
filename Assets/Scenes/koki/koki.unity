@@ -397,11 +397,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &186438529 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1466110593942136860, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
-  m_PrefabInstance: {fileID: 4863204397103876617}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &187916421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,11 +1068,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933438956}
   m_CullTransparentMesh: 1
---- !u!1 &1084339374 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1247054590532595526, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
-  m_PrefabInstance: {fileID: 4863204397103876617}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1918439706 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4918145815149846171, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
@@ -1397,30 +1387,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 284790290}
     m_Modifications:
-    - target: {fileID: 1599804162561912537, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 1599804162561912537, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1599804162561912537, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 839
-      objectReference: {fileID: 0}
-    - target: {fileID: 1599804162561912537, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 472
-      objectReference: {fileID: 0}
-    - target: {fileID: 2287003008587958683, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2287003008587958683, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 3765315215770844286, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1505,14 +1471,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 4722298028706796800, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4722298028706796800, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 475
-      objectReference: {fileID: 0}
     - target: {fileID: 5642737639145886083, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
       propertyPath: resultPanel
       value: 
@@ -1521,14 +1479,6 @@ PrefabInstance:
       propertyPath: settingPanel
       value: 
       objectReference: {fileID: 828481133216139773}
-    - target: {fileID: 7347266986640347411, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
-      propertyPath: blackScreen
-      value: 
-      objectReference: {fileID: 1084339374}
-    - target: {fileID: 7347266986640347411, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
-      propertyPath: cameraFrame
-      value: 
-      objectReference: {fileID: 186438529}
     - target: {fileID: 7347266986640347411, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
       propertyPath: audioManager
       value: 
@@ -1541,10 +1491,6 @@ PrefabInstance:
       propertyPath: cameraCapture
       value: 
       objectReference: {fileID: 555400071}
-    - target: {fileID: 8334070191211520273, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
-      propertyPath: m_fontSize
-      value: 89.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

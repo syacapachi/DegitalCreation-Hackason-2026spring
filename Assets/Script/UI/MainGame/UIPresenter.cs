@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Syacapachi.Attribute;
 using Syacapachi.Camera;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,9 @@ public class UIPresenter : MonoBehaviour
     [SerializeField] private GameObject cameraFrame;
     [SerializeField] private GameObject blackScreen;
 
+    [Header("Game Settings")]
+    [SerializeField] private float initialCountdown = 100f;
+
     private UIModel _model;
 
     public event Action OnCountdownStart;
@@ -26,12 +30,14 @@ public class UIPresenter : MonoBehaviour
         _model = new UIModel();
         OnCountdownEnd += () => SetResultPanelActive(true); //カウントダウン終了時の処理
         OnCountdownStart += () => audioManager.PlayBackgroudMusic(); //カウントダウン開始時の処理
-        cameraCapture.OnShutter += () => ShutterAnimation().Forget(); 
+        cameraCapture.OnShutter += () => ShutterAnimation().Forget();
+        
     }
 
     private void Start()
     {
         UpdatePhotoCountDisplay(); // 初期表示
+        StartCountdown(initialCountdown); // シーン読み込み時に指定時間でカウントダウンを開始
 
         if (cameraCapture != null)
         {
@@ -120,23 +126,37 @@ public class UIPresenter : MonoBehaviour
         _model.RemainingTime = duration;
         OnCountdownStart?.Invoke();
 
+        int lastSecond = -1;
+
         while (_model.RemainingTime > 0)
         {
             _model.RemainingTime -= Time.deltaTime;
-            UpdateCountdownDisplay(_model.RemainingTime);
+            
+            // 一秒単位での変化を検知
+            int currentSecond = Mathf.CeilToInt(_model.RemainingTime);
+            if (currentSecond != lastSecond)
+            {
+                lastSecond = currentSecond;
+                UpdateCountdownDisplay(currentSecond, duration);
+            }
+            
             yield return null;
         }
 
         _model.RemainingTime = 0;
         _model.IsCountingDown = false;
-        UpdateCountdownDisplay(0);
+        UpdateCountdownDisplay(0, duration);
         OnCountdownEnd?.Invoke();
     }
 
-    private void UpdateCountdownDisplay(float time)
+    private void UpdateCountdownDisplay(int currentSecond, float totalDuration)
     {
-        // 小数点以下を切り上げて表示
-        UpdateCountdown(Mathf.CeilToInt(time).ToString());
+        // 小数点以下を切り上げた一秒単位の数値を表示
+        UpdateCountdown(currentSecond.ToString());
+
+        // バッテリーゲージを一秒単位で減らす (残り時間 / 制限時間)
+        float fillAmount = (float)currentSecond / totalDuration;
+        uiView.SetBatteryGauge(fillAmount);
     }
 
 
@@ -170,4 +190,12 @@ public class UIPresenter : MonoBehaviour
     public void HideInfo() => SetInfoPanelActive(false);
     public void ShowResult() => SetResultPanelActive(true);
     
+    [Header("Debug")]
+    [SerializeField] private float debugCountdownDuration = 10f;
+
+    [OnInspectorButton]
+    public void DebugStartCountdown()
+    {
+        StartCountdown(debugCountdownDuration);
+    }
 }
