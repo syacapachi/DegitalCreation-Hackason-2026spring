@@ -59,6 +59,7 @@
         [Header("Settings")]
         [SerializeField] private bool useJPG = false;
         [SerializeField] private int jpgQuality = 75;
+        [SerializeField] private int m_RayCount = 20;
 
         [Header("Burst")]
         [SerializeField] private float burstInterval = 0.1f;
@@ -180,7 +181,7 @@
                 done = true;
             });
 
-            var visibleObj = PhotoAnalyzer.GetVisibleObject(targetCamera, 1<<LayerMask.NameToLayer("PhotoTarget"),20);
+            var visibleObj = PhotoAnalyzer.GetVisibleObject(targetCamera, 1<<LayerMask.NameToLayer("PhotoTarget"), m_RayCount);
 
             DebugObject(visibleObj);
 

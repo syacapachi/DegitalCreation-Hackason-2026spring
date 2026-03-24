@@ -39,7 +39,7 @@ public class MoveController : MonoBehaviour
     float force = 5f;
 
     //Vector3 velocity = Vector3.zero;
-    //Vector3 correction = new Vector3(1, ,1);
+    private static Vector3 correction = new Vector3(1,0 ,1);
 
     public bool IsFlying
     {
@@ -95,6 +95,7 @@ public class MoveController : MonoBehaviour
         if (isFlying)
         {
             Vector3 velocity = rb.linearVelocity;
+            //float speed = Vector3.Scale(velocity, correction).magnitude;
             float speed = velocity.magnitude;
 
             //// ① 重力（常に下）
