@@ -5,6 +5,8 @@ public static class PhotoAnalyzer
 {
     public struct PhotoObjectInfo
     {
+        public static int baseScore = 100;
+
         public GameObject gameObject;
 
         /// <summary>画面中央への近さ（0〜1）</summary>
@@ -31,7 +33,14 @@ public static class PhotoAnalyzer
             viewportPosition = position;
             viewportRadius = radius;
             color = Color.Lerp(Color.red, Color.green, totalScore);
-
+        }
+        public float GetScore()
+        {
+            if(gameObject.TryGetComponent<PhotoTargetController>(out var photo))
+            {
+                return photo.Score * totalScore;
+            }
+            return baseScore * totalScore;
         }
         public override readonly string ToString()
         {
@@ -47,7 +56,7 @@ public static class PhotoAnalyzer
     /// <param name="cam"></param>
     /// <param name="targetLayer"></param>
     /// <returns></returns>
-    public static List<Renderer> GetVisibleRenderer(Camera cam, LayerMask targetLayer)
+    public static List<Renderer> GetVisibleComponent(Camera cam, LayerMask targetLayer)
     {
         List<Renderer> result = new();
 
@@ -105,7 +114,7 @@ public static class PhotoAnalyzer
     }
     public static HashSet<PhotoObjectInfo> GetVisibleObject(Camera cam, LayerMask targetLayer, int rayResolution = 5)
     {
-        List<Renderer> candidates = GetVisibleRenderer(cam, targetLayer);
+        List<Renderer> candidates = GetVisibleComponent(cam, targetLayer);
         HashSet<GameObject> visibleObjects = GetObjectsByRaycast(cam, targetLayer, rayResolution);
         HashSet<PhotoObjectInfo> result = new();
         foreach (var rend in candidates)
