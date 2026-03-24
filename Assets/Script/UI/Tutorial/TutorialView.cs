@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+//チュートリアルパネルの制御
 public class TutorialView : MonoBehaviour
 {
     [SerializeField] private GameObject tutorialPanel;
