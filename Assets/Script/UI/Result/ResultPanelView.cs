@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ public class ResultPanelView : MonoBehaviour
     [SerializeField] public GameObject contentArea;
     [SerializeField] private GameObject photoItemPrefab; // Prefab that has a RawImage component
     [SerializeField] private Button toHomeButton; //タイトルへ戻るボタン
+    [SerializeField] private TextMeshProUGUI scoreText;
 
     public event Action OnToHomeButtonClick;
     public void ClearPhotos()
@@ -35,5 +37,13 @@ public class ResultPanelView : MonoBehaviour
     {
         //イベントリスナーを追加
         toHomeButton.onClick.AddListener(() => OnToHomeButtonClick?.Invoke());
+    }
+
+    public void SetScoreText(string text)
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = text;
+        }
     }
 }

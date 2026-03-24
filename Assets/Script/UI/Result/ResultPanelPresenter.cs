@@ -25,6 +25,8 @@ public class ResultPanelPresenter : MonoBehaviour
         {
             resultPanelView.AddPhoto(photo);
         }
+
+        resultPanelView.SetScoreText(resultPanelModel.ScoreText);
     }
 
     void Start()
