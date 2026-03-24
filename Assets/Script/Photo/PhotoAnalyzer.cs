@@ -49,8 +49,8 @@ using Syacapachi.Controller;
             public override readonly string ToString()
             {
                 return $"Object:{gameObject.name}\n" +
-                    $"Center:{centerScore}" +
-                    $"Size:{sizeScore}" +
+                    $"Center:{centerScore}\n" +
+                    $"Size:{sizeScore}\n" +
                     $"Score:{GetScore()}";
             }
         }

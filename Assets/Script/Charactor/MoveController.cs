@@ -13,7 +13,7 @@ public class MoveController : MonoBehaviour
     [SerializeField] private bool isFlying = true;
     [Header("FlySetting")]
     [SerializeField,EnableIf(nameof(isFlying))]
-    float gravity;
+    float gravity = 9.81f;
 
     [SerializeField, EnableIf(nameof(isFlying))]
     float yCorrection = 0.05f;
@@ -66,13 +66,14 @@ public class MoveController : MonoBehaviour
     }
     private void BoostActionHandle()
     {
-        Vector3 foward = reciever.Camera.transform.forward;
-        rb.AddForce(force * foward, ForceMode.Acceleration);
+        //Vector3 foward = reciever.Camera.transform.forward;
+        //rb.AddForce(force * foward, ForceMode.Acceleration);
 
-        if (rb.linearVelocity.magnitude > maxSpeed)
-        {
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
-        }
+        //if (rb.linearVelocity.magnitude > maxSpeed)
+        //{
+        //    rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+        //}
+        rb.linearVelocity = reciever.Camera.transform.forward * maxSpeed;
     }
 
     
