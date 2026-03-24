@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ResultPanelPresenter : MonoBehaviour
@@ -20,10 +20,10 @@ public class ResultPanelPresenter : MonoBehaviour
 
         resultPanelView.ClearPhotos();
 
-        var photos = resultPanelModel.GetPhotos();
+        var photos = resultPanelModel.GetPhotoData();
         foreach (var photo in photos)
         {
-            resultPanelView.AddPhoto(photo);
+            resultPanelView.AddPhotoData(photo);
         }
 
         resultPanelView.SetScoreText(resultPanelModel.ScoreText);

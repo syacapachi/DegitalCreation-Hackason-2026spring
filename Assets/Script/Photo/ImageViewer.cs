@@ -47,7 +47,7 @@
         {
             display.texture = tex;
         }
-        public void Show(CameraCapture.PhotoData photo)
+        public void ShowDetail(CameraCapture.PhotoData photo)
         {
             Show(photo.texture);
             Refresh();
@@ -58,7 +58,7 @@
         }
         public void PlaceCircle(RectTransform parent, Vector2 viewportPos, float size)
         {
-            Image img = imageNoActiveQueue.Dequeue();
+            Image img = imageNoActiveQueue.Count > 0? imageNoActiveQueue.Dequeue() : Instantiate(imagePrefab).GetComponent<Image>();
             img.transform.SetParent(parent);
 
             // 円スプライトを設定

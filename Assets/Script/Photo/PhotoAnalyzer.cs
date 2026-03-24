@@ -41,19 +41,23 @@ using Syacapachi.Controller;
             }
             public readonly float GetScore()
             {
-                if (gameObject.TryGetComponent<PhotoTargetController>(out var photo))
+                PhotoTargetController photo = gameObject.GetComponentInParent<PhotoTargetController>();
+                photo ??= gameObject.GetComponentInChildren<PhotoTargetController>();
+                if(photo == null)
                 {
-                    return photo.Score * totalScore;
+                    Debug.LogWarning($"Cant Find PhotoTargetController At {gameObject.name}");
+                    return baseScore * totalScore;
                 }
                 Debug.Log($"Dont Get Object{gameObject.name}");
                 return baseScore * totalScore;
             }
             public override readonly string ToString()
             {
-                return $"Object:{gameObject.name}\n" +
+                return
+                    $"Score:{GetScore()}\n" +
+                    $"Object:{gameObject.name}\n" +
                     $"Center:{centerScore}\n" +
-                    $"Size:{sizeScore}\n" +
-                    $"Score:{GetScore()}";
+                    $"Size:{sizeScore}";
             }
         }
         /// <summary>

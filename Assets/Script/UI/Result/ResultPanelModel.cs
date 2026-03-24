@@ -1,4 +1,4 @@
-using Syacapachi.Attribute;
+﻿using Syacapachi.Attribute;
 using Syacapachi.Camera;
 using UnityEngine;
 using System.Collections.Generic;
@@ -63,7 +63,10 @@ public class ResultPanelModel : MonoBehaviour
     {
         return photoManager != null ? photoManager.GetPhotos() : new List<Texture2D>();
     }
-
+    public List<CameraCapture.PhotoData> GetPhotoData()
+    {
+        return photoManager != null ? photoManager.GetPhotoDatas() : new List<CameraCapture.PhotoData>();
+    }
     public string ScoreText
     {
         get { return _totalScore.ToString("n1"); }

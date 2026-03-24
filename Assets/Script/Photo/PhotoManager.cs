@@ -9,7 +9,7 @@
 
         private readonly List<CameraCapture.PhotoData> photos = new();
 
-        public bool AddPhoto(CameraCapture.PhotoData photoInfo, bool overwriteOld)
+        public bool AddPhoto(CameraCapture.PhotoData photoInfo, bool overwriteOld = false)
         {
             if (photos.Count >= maxPhotos)
             {
