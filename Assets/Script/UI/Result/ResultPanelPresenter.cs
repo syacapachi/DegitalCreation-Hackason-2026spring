@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ResultPanelPresenter : MonoBehaviour
 {
@@ -7,6 +8,11 @@ public class ResultPanelPresenter : MonoBehaviour
     
     [Header("UI Views")]
     [SerializeField] public ResultPanelView resultPanelView;
+
+    private void OnEnable()
+    {
+        ShowResults();
+    }
 
     public void ShowResults()
     {
@@ -19,5 +25,11 @@ public class ResultPanelPresenter : MonoBehaviour
         {
             resultPanelView.AddPhoto(photo);
         }
+    }
+
+    void Start()
+    {
+        // ゲーム終了時にホーム画面に戻るボタンを押した際の処理
+        resultPanelView.OnToHomeButtonClick += () => SceneManager.LoadScene("Home");
     }
 }

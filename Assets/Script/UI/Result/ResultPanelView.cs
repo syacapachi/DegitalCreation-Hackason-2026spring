@@ -1,11 +1,15 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ResultPanelView : MonoBehaviour
 {
     [Header("UI References")]
     [SerializeField] public GameObject contentArea;
     [SerializeField] private GameObject photoItemPrefab; // Prefab that has a RawImage component
+    [SerializeField] private Button toHomeButton; //タイトルへ戻るボタン
 
+    public event Action OnToHomeButtonClick;
     public void ClearPhotos()
     {
         foreach (Transform child in contentArea.transform)
@@ -19,10 +23,17 @@ public class ResultPanelView : MonoBehaviour
         if (photoItemPrefab == null) return;
 
         GameObject item = Instantiate(photoItemPrefab, contentArea.transform);
+        item.SetActive(true);
         UnityEngine.UI.RawImage rawImage = item.GetComponentInChildren<UnityEngine.UI.RawImage>();
         if (rawImage != null)
         {
             rawImage.texture = texture;
         }
+    }
+
+    void Awake()
+    {
+        //イベントリスナーを追加
+        toHomeButton.onClick.AddListener(() => OnToHomeButtonClick?.Invoke());
     }
 }

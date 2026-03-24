@@ -42,4 +42,11 @@ public class UIModel
         get => _isCountingDown;
         set => _isCountingDown = value;
     }
+
+    private bool _isResultPanelActive;
+    public bool IsResultPanelActive
+    {
+        get => _isResultPanelActive;
+        set => _isResultPanelActive = value;
+    }
 }

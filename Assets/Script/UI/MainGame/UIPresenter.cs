@@ -17,6 +17,7 @@ public class UIPresenter : MonoBehaviour
     private void Awake()
     {
         _model = new UIModel();
+        OnCountdownEnd += () => SetResultPanelActive(true);
     }
 
     private void Start()
@@ -106,8 +107,16 @@ public class UIPresenter : MonoBehaviour
         uiView.SetInfoPanelActive(active);
     }
 
+    public void SetResultPanelActive(bool active)
+    {
+        _model.IsResultPanelActive = active;
+        uiView.SetResultPanelActive(active);
+    }
+
     public void ShowSettings() => SetSettingPanelActive(true);
     public void HideSettings() => SetSettingPanelActive(false);
     public void ShowInfo() => SetInfoPanelActive(true);
     public void HideInfo() => SetInfoPanelActive(false);
+    public void ShowResult() => SetResultPanelActive(true);
+    
 }

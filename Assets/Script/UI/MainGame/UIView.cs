@@ -7,6 +7,7 @@ public class UIView : MonoBehaviour
     [SerializeField] private GameObject settingPanel;
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private TextMeshProUGUI infoText;
+    [SerializeField] private GameObject resultPanel;
 
     public void SetCountdownText(string text)
     {
@@ -37,6 +38,22 @@ public class UIView : MonoBehaviour
         if (infoPanel != null)
         {
             infoPanel.SetActive(active);
+        }
+    }
+
+    public void SetResultPanelActive(bool active)
+    {
+        if (resultPanel != null)
+        {
+            resultPanel.SetActive(active);
+        }
+    }
+
+    void Start()
+    {
+        if (resultPanel == null)
+        {
+            Debug.LogWarning("UI/UIManagerのUIViewのresultPanel Inspectorを割り当ててください。");
         }
     }
 }

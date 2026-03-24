@@ -491,6 +491,7 @@ MonoBehaviour:
   settingPanel: {fileID: 0}
   infoPanel: {fileID: 2308330641228442261}
   infoText: {fileID: 7118962715533852830}
+  resultPanel: {fileID: 0}
 --- !u!1 &4687868168805705590
 GameObject:
   m_ObjectHideFlags: 0
