@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Rendering;
 
@@ -166,6 +167,11 @@
                 done = true;
             });
 
+            var visibleObj = PhotoAnalyzer.GetVisibleObject(targetCamera, 1<<LayerMask.NameToLayer("PhotoTarget"));
+
+            DebugObject(visibleObj);
+            Debug.Log("Wait...?");
+
             yield return new WaitUntil(() => done);
 
             // 復元
@@ -185,6 +191,13 @@
             else
             {
                 OnCaptureFailed?.Invoke();
+            }
+        }
+        private void DebugObject(HashSet<PhotoAnalyzer.PhotoObjectInfo> infos)
+        {
+            foreach(var info in infos)
+            {
+                Debug.Log(info);
             }
         }
         private void Reset()
