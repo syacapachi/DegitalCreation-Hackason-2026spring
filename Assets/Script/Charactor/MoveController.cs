@@ -18,12 +18,12 @@ public class MoveController : MonoBehaviour
     [SerializeField, EnableIf(nameof(isFlying))]
     float yCorrection = 0.05f;
     [Tooltip("旋回時慣性がどれくらい残るか")]
-    [SerializeField,EnableIf(nameof(isFlying))]
-    float steerPower = 5f;
+    [SerializeField, EnableIf(nameof(isFlying)), Range(0f, 1f)]
+    float steerRate = 0.5f;
 
-    [Tooltip("揚力")]
-    [SerializeField,EnableIf(nameof(isFlying))]
-    float liftPower = 2f;
+    [Tooltip("揚力の割合")]
+    [SerializeField ,EnableIf(nameof(isFlying)), Range(0f, 1f)]
+    float liftRate = 0.2f;
 
     [Tooltip("空気抵抗")]
     [SerializeField, EnableIf(nameof(isFlying)), Range(0f, 1f)]
@@ -68,6 +68,11 @@ public class MoveController : MonoBehaviour
     {
         Vector3 foward = reciever.Camera.transform.forward;
         rb.AddForce(force * foward, ForceMode.Acceleration);
+
+        if (rb.linearVelocity.magnitude > maxSpeed)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+        }
     }
 
     
@@ -99,23 +104,28 @@ public class MoveController : MonoBehaviour
             // ② 揚力（速度の２乗に依存）
             if (speed > 0.1f)
             {
-                float lift = speed * speed * liftPower;
+                float lift = 0.5f * speed * speed * liftRate;
 
                 // 失速処理
                 if (speed < stallSpeed)
                     lift *= 0.2f;
 
-                rb.AddForce(transform.up * lift, ForceMode.Acceleration);
+                //ピッチで揚力変化（リアル化）
+                float pitch = Vector3.Dot(playerRootTransform.forward, Vector3.up);
+                lift *= Mathf.Clamp01(1 - pitch);
+
+                rb.AddForce(playerRootTransform.up * lift, ForceMode.Acceleration);
             }
 
             // ③ カメラ方向への誘導（操作）
             Vector3 targetDir = reciever.Camera.transform.forward;
-            Vector3 steer = (targetDir - velocity.normalized) * steerPower;
+            Vector3 steer = (targetDir - velocity.normalized) * speed * speed * steerRate;
 
             rb.AddForce(steer, ForceMode.Acceleration);
 
             // ④ 空気抵抗
             rb.AddForce(-velocity * drag, ForceMode.Acceleration);
+
 
             // ⑤ 速度制限
             if (rb.linearVelocity.magnitude > maxSpeed)

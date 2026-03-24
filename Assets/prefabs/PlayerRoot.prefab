@@ -731,7 +731,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &3693938446991801613
@@ -801,14 +801,14 @@ MonoBehaviour:
   rb: {fileID: 3640116824584658706}
   moveSpeed: 5
   isFlying: 1
-  gravity: 9.8
-  yCorrection: 0.05
-  steerPower: 5
-  liftPower: 2
-  drag: 0.5
-  maxSpeed: 1000
-  stallSpeed: 5
-  force: 50
+  gravity: 9.81
+  yCorrection: 1
+  steerRate: 1
+  liftRate: 1
+  drag: 0.009
+  maxSpeed: 100
+  stallSpeed: 10
+  force: 100
 --- !u!1 &6024341657256879830
 GameObject:
   m_ObjectHideFlags: 0

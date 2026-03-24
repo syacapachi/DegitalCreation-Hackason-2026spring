@@ -4562,56 +4562,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2779589075573081099, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
-      propertyPath: drag
-      value: 0.009
-      objectReference: {fileID: 0}
-    - target: {fileID: 2779589075573081099, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
-      propertyPath: force
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2779589075573081099, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
-      propertyPath: gravity
-      value: 9.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2779589075573081099, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
-      propertyPath: isFlying
+      propertyPath: liftRate
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2779589075573081099, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
-      propertyPath: maxSpeed
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 2779589075573081099, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
-      propertyPath: liftPower
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2779589075573081099, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
-      propertyPath: steerPower
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2779589075573081099, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
-      propertyPath: yCorrection
+      propertyPath: steerRate
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2779589075573081099, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
-      propertyPath: liftCoefficient
-      value: 0.913
-      objectReference: {fileID: 0}
-    - target: {fileID: 3640116824584658706, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3640116824584658706, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
-    - target: {fileID: 3640116824584658706, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
-      propertyPath: m_Interpolate
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4677478270336928636, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
-      propertyPath: boostAction.m_Name
-      value: Boost
       objectReference: {fileID: 0}
     - target: {fileID: 4842964582056796468, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4619,7 +4575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4842964582056796468, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16.67
+      value: 30.7
       objectReference: {fileID: 0}
     - target: {fileID: 4842964582056796468, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
       propertyPath: m_LocalPosition.z
