@@ -95,6 +95,7 @@ using Syacapachi.Controller;
         public static HashSet<GameObject> GetObjectsByRaycast(Camera cam, LayerMask targetLayer, int resolution = 10)
         {
             HashSet<GameObject> result = new();
+
             //画面を上下左右にresolution等分,そこの中心に向かってRayをとばす
             for (int x = 0; x < resolution; x++)
             {
@@ -107,11 +108,16 @@ using Syacapachi.Controller;
                     );
 
                     Ray ray = cam.ViewportPointToRay(viewport);
-
-                    if (Physics.Raycast(ray, out RaycastHit hit, 100f, targetLayer))
+                    //Layer指定を外す。
+                    if (Physics.Raycast(ray, out RaycastHit hit, 100f))
                     {
-                        result.Add(hit.collider.gameObject);
+                        //ここで判別
+                        if (((1 << hit.collider.gameObject.layer) & targetLayer) != 0)
+                        {
+                            result.Add(hit.collider.gameObject);
+                        }
                     }
+
                 }
             }
 
