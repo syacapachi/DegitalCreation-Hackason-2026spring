@@ -1,7 +1,11 @@
-﻿using UnityEngine;
-
-public class PhotoTargetController : MonoBehaviour
+﻿namespace Syacapachi.Controller
 {
-    [SerializeField] PhotoTargetDataSO DataSO;
-    public int Score => DataSO.Score;
+    using Syacapachi.ScriptableObject;
+    using UnityEngine;
+    
+    public class PhotoTargetController : MonoBehaviour
+    {
+        [SerializeField] PhotoTargetDataSO DataSO;
+        public int Score => DataSO.Score;
+    }
 }

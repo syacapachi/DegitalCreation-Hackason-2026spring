@@ -1,5 +1,6 @@
 ﻿namespace Syacapachi.Camera
 {
+    using Syacapachi.Utils;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -208,7 +209,7 @@
         {
             foreach(var info in infos)
             {
-                Debug.Log(info);
+                Debug.Log($"{info}");
             }
         }
         private void Reset()

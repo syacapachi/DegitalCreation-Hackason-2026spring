@@ -679,9 +679,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4842964582056796468}
-  - component: {fileID: 4677478270336928636}
   - component: {fileID: 3640116824584658706}
   - component: {fileID: 3693938446991801613}
+  - component: {fileID: 4677478270336928636}
+  - component: {fileID: 7022332135860818128}
+  - component: {fileID: 2779589075573081099}
   m_Layer: 0
   m_Name: PlayerRoot
   m_TagString: Untagged
@@ -699,32 +701,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 14.09, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7991200268164941898}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4677478270336928636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5673253056070246676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6cb6d3a2a1484a4d8cf57e660474485, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Syacapachi.Controller.KeyBoardController
-  playerRootTransform: {fileID: 4842964582056796468}
-  rb: {fileID: 3640116824584658706}
-  moveSpeed: {x: 5, y: 0.2, z: 5}
-  m_camera: {fileID: 7430668895365547992}
-  mouseSensitivity: 1
-  yMinLimit: -89
-  yMaxLimit: 89
-  isFlying: 1
 --- !u!54 &3640116824584658706
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -773,6 +755,60 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4677478270336928636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5673253056070246676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6cb6d3a2a1484a4d8cf57e660474485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Syacapachi.Controller.KeyBoardController
+  m_camera: {fileID: 7430668895365547992}
+--- !u!114 &7022332135860818128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5673253056070246676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 884ce86e15f6e724aa6e52f46caeeed7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Syacapachi.Controller.MouseCameraController
+  reciever: {fileID: 4677478270336928636}
+  mouseSensitivity: 1
+  yMinLimit: -89
+  yMaxLimit: 89
+--- !u!114 &2779589075573081099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5673253056070246676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7fef9447a60f1641b2b36624761cca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoveController
+  reciever: {fileID: 4677478270336928636}
+  playerRootTransform: {fileID: 4842964582056796468}
+  rb: {fileID: 3640116824584658706}
+  moveSpeed: 5
+  isFlying: 1
+  gravity: 9.8
+  yCorrection: 0.05
+  steerPower: 5
+  liftPower: 2
+  drag: 0.5
+  maxSpeed: 1000
+  stallSpeed: 5
+  force: 50
 --- !u!1 &6024341657256879830
 GameObject:
   m_ObjectHideFlags: 0

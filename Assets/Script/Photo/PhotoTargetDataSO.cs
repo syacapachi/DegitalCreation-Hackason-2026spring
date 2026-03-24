@@ -1,10 +1,13 @@
-﻿using System;
-using UnityEngine;
-
-[CreateAssetMenu(menuName = "PhotoTargetData")]
-[Serializable]
-public class PhotoTargetDataSO : ScriptableObject
+﻿namespace Syacapachi.ScriptableObject
 {
-    [SerializeField] int score;
-    public int Score => score;
+    using System;
+    using UnityEngine;
+
+    [CreateAssetMenu(menuName = "PhotoTargetData")]
+    [Serializable]
+    public class PhotoTargetDataSO : ScriptableObject
+    {
+        [SerializeField] int score;
+        public int Score => score;
+    }
 }

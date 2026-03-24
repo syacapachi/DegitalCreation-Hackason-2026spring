@@ -1,9 +1,13 @@
-﻿using static Syacapachi.Camera.CameraCapture;
-namespace Syacapachi.Camera
+﻿
+namespace Syacapachi.Controller
 {
     using Syacapachi.Attribute;
+    using Syacapachi.Camera;
+    using Syacapachi.Utils;
     using UnityEngine;
     using UnityEngine.InputSystem;
+    using static Syacapachi.Camera.CameraCapture;
+
     public class PhotoCameraController : MonoBehaviour
     {
 
