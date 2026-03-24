@@ -45,8 +45,8 @@ namespace Syacapachi.Controller
         }
         private void OnCaptureComplete(PhotoData data) 
         {
-            manager.AddPhoto(data.texture, overridden);
-            viewer.Show(data.texture);
+            manager.AddPhoto(data, overridden);
+            viewer.Show(data);
             Debug.Log("capture success");
         }
         private void OnCaptureFailed()

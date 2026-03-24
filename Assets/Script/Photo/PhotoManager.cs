@@ -7,15 +7,15 @@
     {
         public int maxPhotos = 10;
 
-        private readonly List<Texture2D> photos = new List<Texture2D>();
+        private readonly List<CameraCapture.PhotoData> photos = new();
 
-        public bool AddPhoto(Texture2D photo, bool overwriteOld)
+        public bool AddPhoto(CameraCapture.PhotoData photoInfo, bool overwriteOld)
         {
             if (photos.Count >= maxPhotos)
             {
                 if (overwriteOld)
                 {
-                    Destroy(photos[0]);
+                    Destroy(photos[0].texture);
                     photos.RemoveAt(0);
                 }
                 else
@@ -25,11 +25,20 @@
                 }
             }
 
-            photos.Add(photo);
+            photos.Add(photoInfo);
             return true;
         }
 
         public List<Texture2D> GetPhotos()
+        {
+            List<Texture2D> result = new List<Texture2D>();
+            foreach(var data in photos)
+            {
+                result.Add(data.texture);
+            }
+            return result;
+        }
+        public List<CameraCapture.PhotoData> GetPhotoDatas()
         {
             return photos;
         }

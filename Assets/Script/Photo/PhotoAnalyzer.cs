@@ -4,6 +4,7 @@
     using UnityEngine;
     using Syacapachi.ScriptableObject;
 using Syacapachi.Controller;
+    using UnityEditor;
 
     public static class PhotoAnalyzer
     {

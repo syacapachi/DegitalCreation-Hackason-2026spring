@@ -15,8 +15,6 @@ public class MoveController : MonoBehaviour
     [SerializeField,EnableIf(nameof(isFlying))]
     float gravity = 9.81f;
 
-    [SerializeField, EnableIf(nameof(isFlying))]
-    float yCorrection = 0.05f;
     [Tooltip("旋回時慣性がどれくらい残るか")]
     [SerializeField, EnableIf(nameof(isFlying)), Range(0f, 1f)]
     float steerRate = 0.5f;

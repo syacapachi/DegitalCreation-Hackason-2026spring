@@ -180,7 +180,7 @@
                 done = true;
             });
 
-            var visibleObj = PhotoAnalyzer.GetVisibleObject(targetCamera, 1<<LayerMask.NameToLayer("PhotoTarget"));
+            var visibleObj = PhotoAnalyzer.GetVisibleObject(targetCamera, 1<<LayerMask.NameToLayer("PhotoTarget"),20);
 
             DebugObject(visibleObj);
 
