@@ -1,27 +1,38 @@
-using UnityEngine;
-using Syacapachi.Camera;
 using System;
 using System.Collections;
-
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using Syacapachi.Camera;
+using UnityEngine;
+using UnityEngine.UI;
 
 
 public class UIPresenter : MonoBehaviour
 {
     [SerializeField] private UIView uiView;
     [SerializeField] private CameraCapture cameraCapture;
+    [SerializeField] private PhotoManager photoManager;
+    [SerializeField] private AuidoManager audioManager;
+    [SerializeField] private GameObject cameraFrame;
+    [SerializeField] private GameObject blackScreen;
+
     private UIModel _model;
 
     public event Action OnCountdownStart;
     public event Action OnCountdownEnd;
 
-    private void Awake()
+    void Awake()
     {
         _model = new UIModel();
-        OnCountdownEnd += () => SetResultPanelActive(true);
+        OnCountdownEnd += () => SetResultPanelActive(true); //カウントダウン終了時の処理
+        OnCountdownStart += () => audioManager.PlayBackgroudMusic(); //カウントダウン開始時の処理
+        cameraCapture.OnShutter += () => ShutterAnimation().Forget(); 
     }
 
     private void Start()
     {
+        UpdatePhotoCountDisplay(); // 初期表示
+
         if (cameraCapture != null)
         {
             // === 暫定デバッグ: CameraCapture の位置を表示 ===
@@ -35,9 +46,15 @@ public class UIPresenter : MonoBehaviour
             Debug.Log($"[DEBUG] CameraCapture is attached to: {path}");
             // ===========================================
 
+            // 単発・連写問わず、撮影完了時に枚数表示を更新
+            cameraCapture.OnCaptureComplete += (data) => 
+            {
+                StartCoroutine(UpdatePhotoCountNextFrame());
+            };
+
             cameraCapture.OnBurstProgress += (current, total) => 
             {
-                UpdateInfoText($"撮った枚数: {current} / {total}");
+                UpdateInfoText($"連写中: {current} / {total}");
             };
         }
         else
@@ -46,11 +63,45 @@ public class UIPresenter : MonoBehaviour
         }
     }
 
+    private IEnumerator UpdatePhotoCountNextFrame()
+    {
+        // PhotoManager 側に写真が追加（AddPhoto）されるのを待つため1フレーム遅延
+        yield return new WaitForEndOfFrame();
+        UpdatePhotoCountDisplay();
+    }
+
+    private void UpdatePhotoCountDisplay()
+    {
+        if (photoManager == null) return;
+        
+        int currentCount = photoManager.GetPhotos().Count;
+        int maxCount = photoManager.maxPhotos;
+        int remaining = maxCount - currentCount;
+        
+        // 撮影枚数と残り枚数の2つの情報を表示
+        UpdateInfoText($"残り枚数: {remaining}");
+    }
 
     public void UpdateCountdown(string text)
     {
         _model.CountdownText = text;
         uiView.SetCountdownText(text);
+    }
+
+    private async UniTask ShutterAnimation()
+    {
+        audioManager.PlayShutterSound();
+        await FadeIn();
+        blackScreen.GetComponent<Image>().DOFade(0f, 0.2f);
+        cameraFrame.transform.DOScale(1f, 0.2f);
+        await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+    }
+
+    private async UniTask FadeIn()
+    {
+        blackScreen.GetComponent<Image>().DOFade(1f, 0.2f);
+        cameraFrame.transform.DOScale(0.8f,0.2f);
+        await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
     }
 
     /// <summary>
