@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb5d6ca1863df2488a2d6593033da83, type: 3}
   m_Name: MidiumHuman
   m_EditorClassIdentifier: Assembly-CSharp::PhotoTargetDataSO
-  score: 0
+  score: 1000
