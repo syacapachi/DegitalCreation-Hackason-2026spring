@@ -37,12 +37,12 @@ Material:
     RenderType: Opaque
   disabledShaderPasses:
   - MOTIONVECTORS
-  m_LockedProperties: 
+  m_LockedProperties: _Surface
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 630076e176ff8b64a879f435be836347, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8294f7780a5fe144c97a05eb50ce54f1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -70,7 +70,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 630076e176ff8b64a879f435be836347, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8294f7780a5fe144c97a05eb50ce54f1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -179,9 +179,9 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0.64705884, g: 0.64705884, b: 0.64705884, a: 1}
-    - _SpecColor: {r: 0.64705884, g: 0.64705884, b: 0.64705884, a: 1}
+    - _BaseColor: {r: 0.95094335, g: 0.79008114, b: 0.7715201, a: 1}
+    - _Color: {r: 0.9509433, g: 0.79008114, b: 0.7715201, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0.5018867, g: 0.5018867, b: 0.5018867, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
