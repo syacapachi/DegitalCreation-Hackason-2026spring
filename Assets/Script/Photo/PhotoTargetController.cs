@@ -7,5 +7,6 @@
     {
         [SerializeField] PhotoTargetDataSO DataSO;
         public int Score => DataSO.Score;
+        public Color Color => DataSO.DrawColor;
     }
 }

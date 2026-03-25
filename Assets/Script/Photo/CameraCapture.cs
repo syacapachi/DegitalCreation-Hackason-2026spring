@@ -50,6 +50,7 @@
         
         [Header("Camera")]
         [SerializeField] private Camera targetCamera;
+        [SerializeField] LayerMask targetLayerMask;
 
         [Header("RenderTexture")]
         [SerializeField] private RenderTexture outputTexture;
@@ -152,6 +153,7 @@
             targetCamera.targetTexture = rt;
             targetCamera.Render();
 
+            //描画完了を待つ
             yield return new WaitForEndOfFrame();
 
             bool done = false;
@@ -181,10 +183,11 @@
                 done = true;
             });
 
-            var visibleObj = PhotoAnalyzer.GetVisibleObject(targetCamera, 1<<LayerMask.NameToLayer("PhotoTarget"), m_RayCount);
+            var visibleObj = PhotoAnalyzer.GetVisibleObject(targetCamera, targetLayerMask, m_RayCount);
 
             DebugObject(visibleObj);
 
+            //GPからの書き出しを待つ
             yield return new WaitUntil(() => done);
 
             // 復元

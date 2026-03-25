@@ -1,32 +1,34 @@
 ﻿namespace Syacapachi.Utils
 {
-    using System.Collections.Generic;
-    using UnityEngine;
-    using Syacapachi.ScriptableObject;
 using Syacapachi.Controller;
+    using Syacapachi.ScriptableObject;
+    using System.Collections.Generic;
+    using Unity.VisualScripting;
     using UnityEditor;
+    using UnityEngine;
 
     public static class PhotoAnalyzer
     {
         public struct PhotoObjectInfo
         {
-            public static int baseScore = 100;
+            public readonly int Score;
 
-            public GameObject gameObject;
+            public readonly GameObject gameObject;
 
             /// <summary>画面中央への近さ（0〜1）</summary>
-            public float centerScore;
+            public readonly float centerScore;
 
             /// <summary>画面内での大きさ（0〜1）</summary>
-            public float sizeScore;
+            public readonly float sizeScore;
 
             /// <summary>総合スコア（用途に応じて）</summary>
-            public float totalScore;
+            public readonly float totalScore;
 
             // ===== UI用 =====
-            public Vector2 viewportPosition; // (0〜1)
-            public float viewportRadius;     // (0〜1基準)
-            public Color color;
+            public readonly Vector2 viewportPosition; // (0〜1)
+            public readonly float viewportRadius;     // (0〜1基準)
+            public readonly Color drawColor;
+            
 
             public PhotoObjectInfo(GameObject obj, float center, float size, Vector2 position, float radius)
             {
@@ -37,19 +39,23 @@ using Syacapachi.Controller;
 
                 viewportPosition = position;
                 viewportRadius = radius;
-                color = Color.Lerp(Color.red, Color.green, totalScore);
+                var targetData = gameObject.GetComponentInParent<PhotoTargetController>(true);
+                targetData ??= gameObject.GetComponentInChildren<PhotoTargetController>(true);
+                if(targetData == null)
+                {
+                    Debug.LogWarning($"Cant Find PhotoTargetController At {gameObject.name}");
+                    Score = 100;
+                    drawColor = Color.white;
+                }
+                else
+                {
+                    Score = targetData.Score;
+                    drawColor = targetData.Color;
+                }
             }
             public readonly float GetScore()
             {
-                PhotoTargetController photo = gameObject.GetComponentInParent<PhotoTargetController>();
-                photo ??= gameObject.GetComponentInChildren<PhotoTargetController>();
-                if(photo == null)
-                {
-                    Debug.LogWarning($"Cant Find PhotoTargetController At {gameObject.name}");
-                    return baseScore * totalScore;
-                }
-                Debug.Log($"Dont Get Object{gameObject.name}");
-                return baseScore * totalScore;
+                return Score * totalScore;
             }
             public override readonly string ToString()
             {

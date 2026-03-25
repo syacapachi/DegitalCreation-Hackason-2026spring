@@ -66,6 +66,7 @@ public class ResultPanelView : MonoBehaviour
         rt.sizeDelta = parent.sizeDelta * size;
         rt.anchoredPosition = Vector2.zero;
 
+        rt.localScale = Vector3.one;
         img.gameObject.SetActive(true);
     }
 

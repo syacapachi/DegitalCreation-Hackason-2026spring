@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -13,7 +13,7 @@ public class UIPresenter : MonoBehaviour
     [SerializeField] private UIView uiView;
     [SerializeField] private CameraCapture cameraCapture;
     [SerializeField] private PhotoManager photoManager;
-    [SerializeField] private AuidoManager audioManager;
+    [SerializeField] private AudioManager audioManager;
     [SerializeField] private GameObject cameraFrame;
     [SerializeField] private GameObject blackScreen;
 

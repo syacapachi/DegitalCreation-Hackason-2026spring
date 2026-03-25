@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: MidiumHuman
   m_EditorClassIdentifier: Assembly-CSharp::PhotoTargetDataSO
   score: 1000
+  drawColor: {r: 0.19370294, g: 1, b: 0, a: 1}

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5697522956111171928}
-  - component: {fileID: 5562574973722231844}
+  - component: {fileID: 6311969679587651890}
   - component: {fileID: 4878929815477436654}
   - component: {fileID: 1951498921877187212}
   m_Layer: 0
@@ -34,7 +34,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5562574973722231844
+--- !u!114 &6311969679587651890
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,9 +43,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6251049968035673755}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7acb6f2759d554c4cb90c246658a9d1c, type: 3}
+  m_Script: {fileID: 11500000, guid: c6f2cf2cf5cccf54cb227e02c5b4cca8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AuidoManager
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   backMusic: {fileID: 4878929815477436654}
   shutterSound: {fileID: 1951498921877187212}
 --- !u!82 &4878929815477436654
@@ -61,7 +61,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: e5730291f5f772d4da7278da7a353ea8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0

@@ -4,6 +4,7 @@
     using Syacapachi.Camera;
     using System.Collections.Generic;
     using System.Linq;
+    using TMPro;
     using UnityEngine;
 
     using UnityEngine.UI;
@@ -14,10 +15,8 @@
         [SerializeField] RawImage display;
         [SerializeField] Sprite circleSprite;
         [SerializeField] GameObject imagePrefab;    
-        [SerializeField] PhotoManager manager;
-        private Queue<Image> imageActiveQueue = new ();
-        private Queue<Image> imageNoActiveQueue = new();
-        private int photoindex = -1;
+        private readonly Queue<Image> imageActiveQueue = new ();
+        private readonly Queue<Image> imageNoActiveQueue = new();
 
         private void Awake()
         {
@@ -27,20 +26,6 @@
                 obj.SetActive(false);
                 var img = obj.GetComponent<Image>();
                 imageNoActiveQueue.Enqueue(img);
-            }
-        }
-        [OnInspectorButton]
-        public void ShowNext()
-        {
-            if (manager == null)
-            {
-                Debug.LogError("Manager is null");
-                return;
-            }
-            List<Texture2D> images = manager.GetPhotos();
-            if (images.Count > 0)
-            {
-                Show(images[photoindex++ % images.Count]);
             }
         }
         public void Show(Texture2D tex)
@@ -53,12 +38,12 @@
             Refresh();
             foreach (var info in photo.info)
             {
-                PlaceCircle(rect, info.viewportPosition, info.viewportRadius);
+                PlaceCircle(rect, info.viewportPosition, info.viewportRadius, info.GetScore(),info.drawColor);
             }
         }
-        public void PlaceCircle(RectTransform parent, Vector2 viewportPos, float size)
+        public void PlaceCircle(RectTransform parent, Vector2 viewportPos, float size, float score,Color drawColor)
         {
-            Image img = imageNoActiveQueue.Count > 0 ? imageNoActiveQueue.Dequeue() : Instantiate(imagePrefab,rect).GetComponent<Image>();
+            Image img = imageNoActiveQueue.Count > 0 ? imageNoActiveQueue.Dequeue() : Instantiate(imagePrefab, rect).GetComponent<Image>();
             img.transform.SetParent(parent);
 
             // 円スプライトを設定
@@ -70,8 +55,14 @@
             rt.anchorMin = rt.anchorMax = viewportPos;
             rt.sizeDelta = parent.sizeDelta * size;
             rt.anchoredPosition = Vector2.zero;
-
             rt.localScale = Vector3.one;
+
+            var textMesh = img.GetComponentInChildren<TextMeshProUGUI>();
+            if (textMesh != null)
+            {
+                textMesh.text = $"{score:n1}";
+                textMesh.color = drawColor;
+            }
 
             img.gameObject.SetActive(true);
             imageActiveQueue.Enqueue(img);
