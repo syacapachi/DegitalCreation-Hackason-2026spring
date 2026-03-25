@@ -53,7 +53,7 @@ public class ResultPanelView : MonoBehaviour
     }
     public void PlaceCircle(RectTransform parent, Vector2 viewportPos, float size)
     {
-        Image img = Instantiate(photoItemPrefab).GetComponent<Image>();
+        Image img = Instantiate(imagePrefab).GetComponent<Image>();
         img.transform.SetParent(parent);
 
         // 円スプライトを設定
