@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -28,10 +28,23 @@ public class UIPresenter : MonoBehaviour
     void Awake()
     {
         _model = new UIModel();
-        OnCountdownEnd += () => SetResultPanelActive(true); //カウントダウン終了時の処理
-        OnCountdownStart += () => audioManager.PlayBackgroudMusic(); //カウントダウン開始時の処理
-        cameraCapture.OnShutter += () => ShutterAnimation().Forget();
-        
+        OnCountdownEnd += () =>
+        {
+            SetResultPanelActive(true); //カウントダウン終了時の処理
+        };
+
+        OnCountdownStart += () =>
+        {
+            if (audioManager != null)
+                audioManager.PlayBackgroudMusic(); //カウントダウン開始時の処理
+            else
+                Debug.LogWarning("[UIPresenter] audioManager is missing in the Inspector!");
+        };
+
+        if (cameraCapture != null)
+        {
+            cameraCapture.OnShutter += () => ShutterAnimation().Forget();
+        }
     }
 
     private void Start()

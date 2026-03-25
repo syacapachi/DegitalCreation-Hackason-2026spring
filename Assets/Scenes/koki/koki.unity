@@ -300,6 +300,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 284790290}
     m_Modifications:
+    - target: {fileID: 4744710229361041051, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
+      propertyPath: m_fontSize
+      value: 611.55
+      objectReference: {fileID: 0}
     - target: {fileID: 4842964582056796468, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
       propertyPath: m_LocalPosition.x
       value: -862.0386
@@ -469,6 +473,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &290382581 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6311969679587651890, guid: 3694c80e3e4cabb4d9fad3e9ff91a853, type: 3}
+  m_PrefabInstance: {fileID: 7216809972909827550}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6f2cf2cf5cccf54cb227e02c5b4cca8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
 --- !u!1 &492239346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1248,7 +1263,7 @@ PrefabInstance:
     - target: {fileID: 7347266986640347411, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
       propertyPath: audioManager
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 290382581}
     - target: {fileID: 7347266986640347411, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
       propertyPath: photoManager
       value: 
