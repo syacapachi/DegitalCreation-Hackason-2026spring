@@ -71,7 +71,7 @@ public class MoveController : MonoBehaviour
         //{
         //    rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
         //}
-        rb.linearVelocity = reciever.Camera.transform.forward * maxSpeed;
+        rb.linearVelocity = reciever.Camera.transform.up * maxSpeed;
     }
 
     
@@ -97,34 +97,38 @@ public class MoveController : MonoBehaviour
             Vector3 velocity = rb.linearVelocity;
             //float speed = Vector3.Scale(velocity, correction).magnitude;
             float speed = velocity.magnitude;
+            float speedMul = speed * speed;
+            Vector3 moveDir = velocity.normalized;
+            Vector3 targetDir = reciever.Camera.transform.forward;
 
             //// ① 重力（常に下）
             rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+            
 
             // ② 揚力（速度の２乗に依存）
             if (speed > 0.1f)
             {
-                float lift = 0.5f * speed * speed * liftRate;
+                float lift = 0.5f * speedMul * liftRate;
 
                 // 失速処理
                 if (speed < stallSpeed)
                     lift *= 0.2f;
 
                 //ピッチで揚力変化（リアル化）
-                float pitch = Vector3.Dot(playerRootTransform.forward, Vector3.up);
-                lift *= Mathf.Clamp01(1 - pitch);
+                float pitch = Vector3.Dot(targetDir, Vector3.up);
+                lift *= (1 - pitch);
 
                 rb.AddForce(playerRootTransform.up * lift, ForceMode.Acceleration);
             }
-
+            
             // ③ カメラ方向への誘導（操作）
-            Vector3 targetDir = reciever.Camera.transform.forward;
-            Vector3 steer = 0.5f * speed * speed * steerRate * (targetDir - velocity.normalized);
+           
+            Vector3 steer = 0.5f * speedMul * steerRate * (targetDir - moveDir);
 
             rb.AddForce(steer, ForceMode.Acceleration);
 
             // ④ 空気抵抗
-            rb.AddForce(-0.5f * drag * Vector3.Scale(velocity, velocity), ForceMode.Acceleration);
+            rb.AddForce(-0.5f * drag * speedMul * moveDir, ForceMode.Acceleration);
 
 
             // ⑤ 速度制限
