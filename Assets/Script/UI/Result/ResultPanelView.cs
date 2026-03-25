@@ -1,25 +1,35 @@
 ﻿using Syacapachi.Camera;
+using Syacapachi.Controller;
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
-public class ResultPanelView : MonoBehaviour
+public class ResultPanelView : ImageViewer
 {
     [Header("UI References")]
     [SerializeField] public GameObject contentArea;
     [SerializeField] private GameObject photoItemPrefab; // Prefab that has a RawImage component
-    [SerializeField] private GameObject imagePrefab;
-    [SerializeField] private Sprite circleSprite;
     [SerializeField] private Button toHomeButton; //タイトルへ戻るボタン
     [SerializeField] private TextMeshProUGUI scoreText;
-
+    private readonly Queue<RawImage> rawImagesActiveQueue = new();
+    private readonly Queue<RawImage> rawImagesNoActiveQueue = new();
     public event Action OnToHomeButtonClick;
-    public void ClearPhotos()
+    void Start()
     {
-        foreach (Transform child in contentArea.transform)
+        //イベントリスナーを追加
+        toHomeButton.onClick.AddListener(() => OnToHomeButtonClick?.Invoke());
+    }
+    public void RefreshPhotos()
+    {
+        base.RefreshPicture();
+        while (rawImagesActiveQueue.Count > 0)
         {
-            Destroy(child.gameObject);
+            var rawImg = rawImagesActiveQueue.Dequeue();
+            rawImg.gameObject.SetActive(false);
+            rawImagesNoActiveQueue.Enqueue(rawImg);
         }
     }
 
@@ -27,54 +37,34 @@ public class ResultPanelView : MonoBehaviour
     {
         if (photoItemPrefab == null) return;
 
-        GameObject item = Instantiate(photoItemPrefab, contentArea.transform);
-        item.SetActive(true);
-        UnityEngine.UI.RawImage rawImage = item.GetComponentInChildren<UnityEngine.UI.RawImage>();
+        RawImage rawImage = rawImagesNoActiveQueue.Count > 0 ? 
+                                rawImagesNoActiveQueue.Dequeue() : 
+                                Instantiate(photoItemPrefab, contentArea.transform).GetComponentInChildren<RawImage>();
         if (rawImage != null)
         {
             rawImage.texture = texture;
         }
+        rawImagesActiveQueue.Enqueue(rawImage);
+        rawImage.gameObject.SetActive(true);
     }
     public void AddPhotoData(CameraCapture.PhotoData photoData)
     {
         if (photoItemPrefab == null) return;
 
-        GameObject item = Instantiate(photoItemPrefab, contentArea.transform);
-        item.SetActive(true);
-        UnityEngine.UI.RawImage rawImage = item.GetComponentInChildren<UnityEngine.UI.RawImage>();
+        RawImage rawImage = rawImagesNoActiveQueue.Count > 0 ?
+                                rawImagesNoActiveQueue.Dequeue() :
+                                Instantiate(photoItemPrefab, contentArea.transform).GetComponentInChildren<RawImage>();
         if (rawImage != null)
         {
             rawImage.texture = photoData.texture;
         }
-        foreach(var info in photoData.info)
-        {
-            PlaceCircle(rawImage.rectTransform, info.viewportPosition, info.viewportRadius);
-        }
-    }
-    public void PlaceCircle(RectTransform parent, Vector2 viewportPos, float size)
-    {
-        Image img = Instantiate(imagePrefab).GetComponent<Image>();
-        img.transform.SetParent(parent);
-
-        // 円スプライトを設定
-        img.sprite = circleSprite;
-        img.color = Color.red;
-
-        RectTransform rt = img.GetComponent<RectTransform>();
-
-        rt.anchorMin = rt.anchorMax = viewportPos;
-        rt.sizeDelta = parent.sizeDelta * size;
-        rt.anchoredPosition = Vector2.zero;
-
-        rt.localScale = Vector3.one;
-        img.gameObject.SetActive(true);
+        base.display = rawImage;
+        ShowDetail(photoData);
+        rawImagesActiveQueue.Enqueue(rawImage);
+        rawImage.gameObject.SetActive(true);
     }
 
-    void Awake()
-    {
-        //イベントリスナーを追加
-        toHomeButton.onClick.AddListener(() => OnToHomeButtonClick?.Invoke());
-    }
+    
 
     public void SetScoreText(string text)
     {

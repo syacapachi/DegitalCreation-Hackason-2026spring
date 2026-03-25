@@ -50,6 +50,7 @@ namespace Syacapachi.Controller
         private void OnCaptureComplete(PhotoData data) 
         {
             manager.AddPhoto(data, overridden);
+            viewer.RefreshPicture();
             viewer.ShowDetail(data);
             Debug.Log("capture success");
             if(photoCorutine != null)

@@ -1457,10 +1457,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea56041c69b42d4d92d4cb59cce8c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResultPanelView
+  display: {fileID: 0}
+  circleSprite: {fileID: -1907716139, guid: bdd809c9a46d36c428e1b17b27a741bd, type: 3}
+  imagePrefab: {fileID: 8048345946492802212, guid: cd8154dcab1ae294d9b2ba6adca61df0, type: 3}
   contentArea: {fileID: 6561715622238523306}
   photoItemPrefab: {fileID: 1501157404820868085}
-  imagePrefab: {fileID: 8048345946492802212, guid: cd8154dcab1ae294d9b2ba6adca61df0, type: 3}
-  circleSprite: {fileID: -1907716139, guid: bdd809c9a46d36c428e1b17b27a741bd, type: 3}
   toHomeButton: {fileID: 6516989547992473754}
   scoreText: {fileID: 1666800375997240544}
 --- !u!1 &8988004887636431200

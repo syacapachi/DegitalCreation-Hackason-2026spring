@@ -11,8 +11,7 @@
 
     public class ImageViewer : MonoBehaviour
     {
-        [SerializeField] RectTransform rect;
-        [SerializeField] RawImage display;
+        [SerializeField] protected RawImage display;
         [SerializeField] Sprite circleSprite;
         [SerializeField] GameObject imagePrefab;    
         private readonly Queue<Image> imageActiveQueue = new ();
@@ -22,7 +21,7 @@
         {
             for (int i = 0; i < 10; i++)
             {
-                var obj = Instantiate(imagePrefab,rect.transform);
+                var obj = Instantiate(imagePrefab,display.rectTransform);
                 obj.SetActive(false);
                 var img = obj.GetComponent<Image>();
                 imageNoActiveQueue.Enqueue(img);
@@ -35,15 +34,14 @@
         public void ShowDetail(CameraCapture.PhotoData photo)
         {
             Show(photo.texture);
-            Refresh();
             foreach (var info in photo.info)
             {
-                PlaceCircle(rect, info.viewportPosition, info.viewportRadius, info.GetScore(),info.drawColor);
+                PlaceCircle(display.rectTransform, info.viewportPosition, info.viewportRadius, info.GetScore(),info.drawColor);
             }
         }
         public void PlaceCircle(RectTransform parent, Vector2 viewportPos, float size, float score,Color drawColor)
         {
-            Image img = imageNoActiveQueue.Count > 0 ? imageNoActiveQueue.Dequeue() : Instantiate(imagePrefab, rect).GetComponent<Image>();
+            Image img = imageNoActiveQueue.Count > 0 ? imageNoActiveQueue.Dequeue() : Instantiate(imagePrefab, display.rectTransform).GetComponent<Image>();
             img.transform.SetParent(parent);
 
             // 円スプライトを設定
@@ -67,7 +65,7 @@
             img.gameObject.SetActive(true);
             imageActiveQueue.Enqueue(img);
         }
-        private void Refresh()
+        public void RefreshPicture()
         {
             while(imageActiveQueue.Count > 0)
             {

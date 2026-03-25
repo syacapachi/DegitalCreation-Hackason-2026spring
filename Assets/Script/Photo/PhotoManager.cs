@@ -6,7 +6,7 @@
     public class PhotoManager : MonoBehaviour
     {
         public int maxPhotos = 10;
-
+        public bool IsMaxPhotos => photos.Count >= maxPhotos;
         private readonly List<CameraCapture.PhotoData> photos = new();
 
         public bool AddPhoto(CameraCapture.PhotoData photoInfo, bool overwriteOld = false)

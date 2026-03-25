@@ -52,7 +52,7 @@ public class ResultPanelModel : MonoBehaviour
     private void AccumulateScore(CameraCapture.PhotoData data)
     {
         if (data == null || data.info == null) return;
-
+        if(photoManager.IsMaxPhotos) return;
         foreach (var info in data.info)
         {
             _totalScore += info.GetScore();
