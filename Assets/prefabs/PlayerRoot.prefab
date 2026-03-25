@@ -224,7 +224,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 87
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -325,7 +325,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3821123710921155156
 RectTransform:
   m_ObjectHideFlags: 0
@@ -334,7 +334,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3454845695673683841}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.12}
   m_LocalScale: {x: 0.0001, y: 0.0001, z: 0.0001}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -573,6 +573,7 @@ MonoBehaviour:
   height: 1024
   useJPG: 0
   jpgQuality: 75
+  m_RayCount: 50
   burstInterval: 0.1
 --- !u!1 &4130948584327729782
 GameObject:
@@ -584,7 +585,6 @@ GameObject:
   m_Component:
   - component: {fileID: 380678638097297705}
   - component: {fileID: 5480153419704156949}
-  - component: {fileID: 5664634376351986992}
   - component: {fileID: 5697928497646172763}
   m_Layer: 0
   m_Name: OverLayCamera
@@ -592,7 +592,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &380678638097297705
 Transform:
   m_ObjectHideFlags: 0
@@ -647,7 +647,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 32
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -659,14 +659,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &5664634376351986992
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4130948584327729782}
-  m_Enabled: 1
 --- !u!114 &5697928497646172763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,7 +837,7 @@ MonoBehaviour:
   isFlying: 1
   gravity: 9.81
   steerRate: 1
-  liftRate: 1
+  liftRate: 0.8
   drag: 0.5
   maxSpeed: 30
   stallSpeed: 10
@@ -5992,7 +5984,8 @@ MonoBehaviour:
       m_Action: Capture
       m_Flags: 0
     m_Flags: 0
-  overridden: 1
+  overridden: 0
+  showResultTime: 1
 --- !u!114 &7036254803754866418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6005,7 +5998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b7f15b120c5d64684e9dd3ca7fd145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Syacapachi.Camera.PhotoManager
-  maxPhotos: 10
+  maxPhotos: 20
 --- !u!1 &9179052812986909061
 GameObject:
   m_ObjectHideFlags: 0

@@ -119,12 +119,12 @@ public class MoveController : MonoBehaviour
 
             // ③ カメラ方向への誘導（操作）
             Vector3 targetDir = reciever.Camera.transform.forward;
-            Vector3 steer = (targetDir - velocity.normalized) * speed * speed * steerRate;
+            Vector3 steer = 0.5f * speed * speed * steerRate * (targetDir - velocity.normalized);
 
             rb.AddForce(steer, ForceMode.Acceleration);
 
             // ④ 空気抵抗
-            rb.AddForce(-velocity * drag, ForceMode.Acceleration);
+            rb.AddForce(-0.5f * drag * Vector3.Scale(velocity, velocity), ForceMode.Acceleration);
 
 
             // ⑤ 速度制限

@@ -58,7 +58,7 @@
         }
         public void PlaceCircle(RectTransform parent, Vector2 viewportPos, float size)
         {
-            Image img = imageNoActiveQueue.Count > 0? imageNoActiveQueue.Dequeue() : Instantiate(imagePrefab).GetComponent<Image>();
+            Image img = imageNoActiveQueue.Count > 0 ? imageNoActiveQueue.Dequeue() : Instantiate(imagePrefab,rect).GetComponent<Image>();
             img.transform.SetParent(parent);
 
             // 円スプライトを設定
@@ -70,6 +70,8 @@
             rt.anchorMin = rt.anchorMax = viewportPos;
             rt.sizeDelta = parent.sizeDelta * size;
             rt.anchoredPosition = Vector2.zero;
+
+            rt.localScale = Vector3.one;
 
             img.gameObject.SetActive(true);
             imageActiveQueue.Enqueue(img);

@@ -19,6 +19,7 @@ namespace Syacapachi.Controller
         [SerializeField] bool overridden = false;
         [SerializeField] float showResultTime = 0.2f;
         private WaitForSeconds waitShow;
+        Coroutine photoCorutine;
         private void Start()
         {
             waitShow = new WaitForSeconds(showResultTime);
@@ -51,7 +52,12 @@ namespace Syacapachi.Controller
             manager.AddPhoto(data, overridden);
             viewer.ShowDetail(data);
             Debug.Log("capture success");
-            StartCoroutine(ShowResultCorutine());
+            if(photoCorutine != null)
+            {
+                StopCoroutine(photoCorutine);
+            }
+            photoCorutine = StartCoroutine(ShowResultCorutine());
+
         }
         private void OnCaptureFailed()
         {
