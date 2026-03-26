@@ -5,11 +5,12 @@
     using UnityEngine;
     public class ScoreCalcrator : MonoBehaviour, IScoreCalcrator
     {
+        [SerializeField] MissonManager missonManager;
         public float CalcrateScore(PhotoAnalyzer.PhotoObjectInfo info)
         {
             float centerScore = CalcrateCenterScore(info.MinX, info.MinY, info.MaxX,info.MaxY,info.centerPosition.x,info.centerPosition.y);
 
-            return info.Score * centerScore * info.size;
+            return info.MaxScore * centerScore * info.size;
         }
         /// <summary>
         /// 中心度0~1

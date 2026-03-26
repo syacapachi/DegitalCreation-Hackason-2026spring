@@ -15,38 +15,18 @@ public class UIPresenter : MonoBehaviour
     [SerializeField] private UIView uiView;
     [SerializeField] private CameraCapture cameraCapture;
     [SerializeField] private PhotoManager photoManager;
-    [SerializeField] private AudioManager audioManager;
     [SerializeField] private GameObject cameraFrame;
     [SerializeField] private GameObject blackScreen;
 
-    [Header("Game Settings")]
-    [SerializeField] private float initialCountdown = 100f;
-
-    private UIModel _model;
+    private UIModelSetting _model;
 
     private ICaptureService Capture => cameraCapture;
     private IPhotoAlbum Album => photoManager;
-    private IMusicPlayer Music => audioManager;
-    private IShutterFeedback ShutterFeedback => audioManager;
 
-    public event Action OnCountdownStart;
-    public event Action OnCountdownEnd;
-
+    
     void Awake()
     {
-        _model = new UIModel();
-        OnCountdownEnd += () =>
-        {
-            SetResultPanelActive(true); //カウントダウン終了時の処理
-        };
-
-        OnCountdownStart += () =>
-        {
-            if (Music != null)
-                Music.PlayBackgroundMusic();
-            else
-                Debug.LogWarning("[UIPresenter] audioManager is missing in the Inspector!");
-        };
+        _model = new UIModelSetting();
 
         if (Capture != null)
         {
@@ -57,7 +37,6 @@ public class UIPresenter : MonoBehaviour
     private void Start()
     {
         UpdatePhotoCountDisplay(); // 初期表示
-        StartCountdown(initialCountdown); // シーン読み込み時に指定時間でカウントダウンを開始
 
         if (Capture != null)
         {
@@ -87,7 +66,6 @@ public class UIPresenter : MonoBehaviour
         {
             Debug.LogWarning("[DEBUG] cameraCapture check: missing reference in UIPresenter.");
         }
-        audioManager ??= ManagerLocator.Instance.AudioManager;
     }
 
     private IEnumerator UpdatePhotoCountNextFrame()
@@ -117,7 +95,7 @@ public class UIPresenter : MonoBehaviour
 
     private async UniTask ShutterAnimation()
     {
-        ShutterFeedback?.PlayShutterSound();
+        ManagerLocator.Instance.AudioManager.PlayShutterSound();
         await FadeIn();
         blackScreen.GetComponent<Image>().DOFade(0f, 0.2f);
         cameraFrame.transform.DOScale(1f, 0.2f);
@@ -131,46 +109,11 @@ public class UIPresenter : MonoBehaviour
         await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
     }
 
-    /// <summary>
-    /// カウントダウンを開始
-    /// </summary>
-    /// <param name="duration">秒数</param>
-    public void StartCountdown(float duration)
-    {
-        if (_model.IsCountingDown) return;
-        StartCoroutine(CountdownRoutine(duration));
-    }
+    
 
-    private IEnumerator CountdownRoutine(float duration)
-    {
-        _model.IsCountingDown = true;
-        _model.RemainingTime = duration;
-        OnCountdownStart?.Invoke();
+    
 
-        int lastSecond = -1;
-
-        while (_model.RemainingTime > 0)
-        {
-            _model.RemainingTime -= Time.deltaTime;
-            
-            // 一秒単位での変化を検知
-            int currentSecond = Mathf.CeilToInt(_model.RemainingTime);
-            if (currentSecond != lastSecond)
-            {
-                lastSecond = currentSecond;
-                UpdateCountdownDisplay(currentSecond, duration);
-            }
-            
-            yield return null;
-        }
-
-        _model.RemainingTime = 0;
-        _model.IsCountingDown = false;
-        UpdateCountdownDisplay(0, duration);
-        OnCountdownEnd?.Invoke();
-    }
-
-    private void UpdateCountdownDisplay(int currentSecond, float totalDuration)
+    public void UpdateCountdownDisplay(int currentSecond, float totalDuration)
     {
         // 小数点以下を切り上げた一秒単位の数値を表示
         UpdateCountdown(currentSecond.ToString());
@@ -211,12 +154,5 @@ public class UIPresenter : MonoBehaviour
     public void HideInfo() => SetInfoPanelActive(false);
     public void ShowResult() => SetResultPanelActive(true);
     
-    [Header("Debug")]
-    [SerializeField] private float debugCountdownDuration = 10f;
-
-    [OnInspectorButton]
-    public void DebugStartCountdown()
-    {
-        StartCountdown(debugCountdownDuration);
-    }
+    
 }

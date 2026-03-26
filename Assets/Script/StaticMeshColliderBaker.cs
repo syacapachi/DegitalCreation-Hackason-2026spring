@@ -1,5 +1,6 @@
+﻿using Syacapachi.Manager;
 using UnityEngine;
-
+[RequireComponent(typeof(MeshCollider),typeof(SkinnedMeshRenderer))]
 public class StaticMeshColliderBaker : MonoBehaviour
 {
     // Inspectorから手動で実行できるようにする属性
@@ -14,7 +15,7 @@ public class StaticMeshColliderBaker : MonoBehaviour
         {
             // 現在のポーズを新しいメッシュに焼き付ける
             Mesh bakedMesh = new Mesh();
-            skinnedMeshRenderer.BakeMesh(bakedMesh);
+            skinnedMeshRenderer.BakeMesh(bakedMesh,true);
             
             // 焼き付けたメッシュをMesh Colliderに適用する
             meshCollider.sharedMesh = bakedMesh;

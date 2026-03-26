@@ -5,12 +5,13 @@
     using System;
     using System.Collections.Generic;
     using UnityEngine;
+    using static Syacapachi.Camera.CameraCapture;
 
     public class PhotoScoreManager : MonoBehaviour
     {
         //仕様維持用の一時敵オーバーロード
         [SerializeField] ScoreCalcrator calcrator;
-        private Dictionary<GameObject, float> photoMaxScoreDic = new();
+        private Dictionary<GameObject, float> photoObjectMaxScoreDic = new();
         private bool isUpdated = false;
         [SerializeField] private float totalScore = 0;
         public float TotalScore
@@ -20,7 +21,7 @@
                 {
                     if (!isUpdated) return totalScore;
                     totalScore = 0;
-                    foreach (var kvp in photoMaxScoreDic)
+                    foreach (var kvp in photoObjectMaxScoreDic)
                     {
                         totalScore += kvp.Value;
                     }
@@ -28,20 +29,25 @@
                 }
             }
         }
-
-        public void AddPhoto(GameObject obj,float socre)
+        private void Start()
         {
-            if (photoMaxScoreDic.ContainsKey(obj))
+            totalScore = 0;
+            photoObjectMaxScoreDic.Clear();
+        }
+
+        public void AddScore(GameObject obj,float socre)
+        {
+            if (photoObjectMaxScoreDic.ContainsKey(obj))
             {
-                if (photoMaxScoreDic[obj] > socre) return;
+                if (photoObjectMaxScoreDic[obj] > socre) return;
             }
-            photoMaxScoreDic[obj] = socre;
+            photoObjectMaxScoreDic[obj] = socre;
             isUpdated = true;
         }
         public float GetScore(GameObject gameObject)
         {
-            if(!photoMaxScoreDic.ContainsKey(gameObject)) return 0f;
-            return photoMaxScoreDic[gameObject];
+            if(!photoObjectMaxScoreDic.ContainsKey(gameObject)) return 0f;
+            return photoObjectMaxScoreDic[gameObject];
         }
         [Obsolete]
         //仕様維持用の一時敵オーバーロード

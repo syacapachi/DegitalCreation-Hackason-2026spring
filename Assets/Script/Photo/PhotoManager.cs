@@ -33,7 +33,7 @@
             photos.Add(photoInfo);
             foreach (var info in photoInfo.info)
             {
-                scoreManager.AddPhoto(info.gameObject,scoreCalcrator.CalcrateScore(info));
+                scoreManager.AddScore(info.gameObject,scoreCalcrator.CalcrateScore(info));
             }
             return true;
         }

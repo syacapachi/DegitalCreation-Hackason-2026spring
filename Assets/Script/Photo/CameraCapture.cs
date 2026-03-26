@@ -40,6 +40,7 @@
             public readonly Texture2D texture;
             public readonly byte[] bytes;
             public readonly HashSet<PhotoAnalyzer.PhotoObjectInfo> info;
+            public ScoreCalcrator Score {get; private set;}
             public PhotoData(Texture2D texture2D, byte[] bytes, HashSet<PhotoAnalyzer.PhotoObjectInfo> info)
             {
                 texture = texture2D;
@@ -61,6 +62,7 @@
         [SerializeField] private bool useJPG = false;
         [SerializeField] private int jpgQuality = 75;
         [SerializeField] private int m_RayCount = 20;
+        [SerializeField] float rayMaxDistance = 300f;
 
         [Header("Burst")]
         [SerializeField] private float burstInterval = 0.1f;
@@ -183,7 +185,7 @@
                 done = true;
             });
 
-            HashSet<PhotoAnalyzer.PhotoObjectInfo> visibleObj = PhotoAnalyzer.GetVisibleObject(targetCamera, targetLayerMask, m_RayCount);
+            HashSet<PhotoAnalyzer.PhotoObjectInfo> visibleObj = PhotoAnalyzer.GetVisibleObject(targetCamera, targetLayerMask, m_RayCount, rayMaxDistance);
 
             DebugObject(visibleObj);
 

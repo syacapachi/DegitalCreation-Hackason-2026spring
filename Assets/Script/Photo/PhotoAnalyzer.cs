@@ -6,9 +6,9 @@
 
     public static class PhotoAnalyzer
     {
-        public struct PhotoObjectInfo
+        public readonly struct PhotoObjectInfo
         {
-            public readonly int Score;
+            public readonly int MaxScore;
 
             public readonly GameObject gameObject;
 
@@ -50,12 +50,12 @@
                 if(targetData == null)
                 {
                     Debug.LogWarning($"Cant Find PhotoTargetController At {gameObject.name}");
-                    Score = 100;
+                    MaxScore = 100;
                     drawColor = Color.white;
                 }
                 else
                 {
-                    Score = targetData.Score;
+                    MaxScore = targetData.Score;
                     drawColor = targetData.Color;
                 }
             }
@@ -105,7 +105,7 @@
         /// <param name="targetLayer"></param>
         /// <param name="resolution"></param>
         /// <returns></returns>
-        public static HashSet<GameObject> GetObjectsByRaycast(Camera cam, LayerMask targetLayer, int resolution = 10)
+        public static HashSet<GameObject> GetObjectsByRaycast(Camera cam, LayerMask targetLayer, int resolution = 10,float maxDistance = 100f)
         {
             HashSet<GameObject> result = new();
 
@@ -122,7 +122,7 @@
 
                     Ray ray = cam.ViewportPointToRay(viewport);
                     //Layer指定を外す。
-                    if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+                    if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
                     {
                         //ここで判別
                         if (((1 << hit.collider.gameObject.layer) & targetLayer) != 0)
@@ -136,10 +136,10 @@
 
             return result;
         }
-        public static HashSet<PhotoObjectInfo> GetVisibleObject(Camera cam, LayerMask targetLayer, int rayResolution = 5)
+        public static HashSet<PhotoObjectInfo> GetVisibleObject(Camera cam, LayerMask targetLayer, int rayResolution = 5,float maxDistance = 100f)
         {
             List<Renderer> candidates = GetVisibleComponent(cam, targetLayer);
-            HashSet<GameObject> visibleObjects = GetObjectsByRaycast(cam, targetLayer, rayResolution);
+            HashSet<GameObject> visibleObjects = GetObjectsByRaycast(cam, targetLayer, rayResolution, maxDistance);
             HashSet<PhotoObjectInfo> result = new();
             foreach (var rend in candidates)
             {

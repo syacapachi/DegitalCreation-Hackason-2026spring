@@ -115,9 +115,9 @@ public class MoveController : MonoBehaviour
 
                 //ピッチで揚力変化（リアル化）
                 float pitch = Vector3.Dot(targetDir, Vector3.up);
-                lift *= (1 - pitch);
-
-                rb.AddForce(playerRootTransform.up * lift, ForceMode.Acceleration);
+                //lift *= (1 - pitch);
+                if(pitch >= 0)
+                    rb.AddForce(playerRootTransform.up * lift, ForceMode.Acceleration);
             }
             
             // ③ カメラ方向への誘導（操作）
