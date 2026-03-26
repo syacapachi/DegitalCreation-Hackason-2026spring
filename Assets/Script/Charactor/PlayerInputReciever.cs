@@ -1,6 +1,5 @@
 ﻿namespace Syacapachi.Controller
 {
-    using Syacapachi.Attribute;
     using System;
     using System.Collections;
     using UnityEngine;

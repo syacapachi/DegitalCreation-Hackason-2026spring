@@ -1,17 +1,22 @@
 ﻿namespace Syacapachi.Camera
 {
+    using Syacapachi.Contracts;
     using UnityEngine;
     using System.Collections.Generic;
+    using Syacapachi.Manager;
 
-    public class PhotoManager : MonoBehaviour
+    public class PhotoManager : MonoBehaviour, IPhotoAlbum
     {
+        [SerializeField] PhotoScoreManager scoreManager;
+        [SerializeField] ScoreCalcrator scoreCalcrator;
         public int maxPhotos = 10;
+        public int MaxPhotos => maxPhotos;
         public bool IsMaxPhotos => photos.Count >= maxPhotos;
         private readonly List<CameraCapture.PhotoData> photos = new();
 
         public bool AddPhoto(CameraCapture.PhotoData photoInfo, bool overwriteOld = false)
         {
-            if (photos.Count >= maxPhotos)
+            if (photos.Count >= MaxPhotos)
             {
                 if (overwriteOld)
                 {
@@ -26,6 +31,10 @@
             }
 
             photos.Add(photoInfo);
+            foreach (var info in photoInfo.info)
+            {
+                scoreManager.AddPhoto(info.gameObject,scoreCalcrator.CalcrateScore(info));
+            }
             return true;
         }
 

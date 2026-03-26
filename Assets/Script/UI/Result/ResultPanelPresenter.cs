@@ -18,7 +18,7 @@ public class ResultPanelPresenter : MonoBehaviour
     {
         if (resultPanelView == null || resultPanelModel == null) return;
 
-        resultPanelView.RefreshPhotos();
+        resultPanelView.RefreshPicture();
 
         var photos = resultPanelModel.GetPhotoData();
         foreach (var photo in photos)

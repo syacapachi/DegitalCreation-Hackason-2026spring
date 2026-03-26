@@ -1,12 +1,8 @@
 ﻿namespace Syacapachi.Utils
 {
-using Syacapachi.Controller;
-    using Syacapachi.ScriptableObject;
+    using Syacapachi.Controller;
     using System.Collections.Generic;
-    using Unity.VisualScripting;
-    using UnityEditor;
     using UnityEngine;
-    using static UnityEngine.EventSystems.EventTrigger;
 
     public static class PhotoAnalyzer
     {
@@ -16,30 +12,39 @@ using Syacapachi.Controller;
 
             public readonly GameObject gameObject;
 
-            /// <summary>画面中央への近さ（0〜1）</summary>
-            public readonly float centerScore;
-
-            /// <summary>画面内での大きさ（0〜1）</summary>
-            public readonly float sizeScore;
-
-            /// <summary>総合スコア（用途に応じて）</summary>
-            public readonly float totalScore;
+            //画面の左上を(0,0),右下を(1,1)とした。
+            public readonly float MinX;
+            public readonly float MaxX;
+            public readonly float MinY;
+            public readonly float MaxY;
 
             // ===== UI用 =====
-            public readonly Vector2 viewportPosition; // (0〜1)
-            public readonly float viewportRadius;     // (0〜1基準)
+            public readonly Vector2 centerPosition; // (0〜1)
+            public readonly float centerRadius;     // (0〜1基準)
             public readonly Color drawColor;
-            
 
-            public PhotoObjectInfo(GameObject obj, float center, float size, Vector2 position, float radius)
+            public readonly float width;
+            public readonly float height;
+            public readonly float size;
+
+            public PhotoObjectInfo(GameObject obj,float minX, float maxX, float minY, float maxY)
             {
                 gameObject = obj;
-                centerScore = center;
-                sizeScore = size;
-                totalScore = center * size;
+                MinX = minX;
+                MaxX = maxX;
+                MinY = minY;
+                MaxY = maxY;
+                
+                height = Mathf.Clamp01(maxY - minY);
+                size = Mathf.Clamp01((maxX - minX) * (maxY - minY));
 
-                viewportPosition = position;
-                viewportRadius = radius;
+                float centerX = (minX + maxX) * 0.5f;
+                float centerY = (minY + maxY) * 0.5f;
+
+                width = Mathf.Clamp01(maxX - minX);
+                centerPosition = new Vector2(centerX, centerY); ;
+                // 半径：バウンディング円として計算
+                centerRadius = Mathf.Sqrt(width * width + height * height) * 0.5f; ;
                 var targetData = gameObject.GetComponentInParent<PhotoTargetController>(true);
                 targetData ??= gameObject.GetComponentInChildren<PhotoTargetController>(true);
                 if(targetData == null)
@@ -54,17 +59,13 @@ using Syacapachi.Controller;
                     drawColor = targetData.Color;
                 }
             }
-            public readonly float GetScore()
-            {
-                return Score * totalScore;
-            }
             public override readonly string ToString()
             {
                 return
-                    $"Score:{GetScore()}\n" +
+                    $"Size:{size}\n" +
                     $"Object:{gameObject.name}\n" +
-                    $"Center:{centerScore}\n" +
-                    $"Size:{sizeScore}";
+                    $"Center:{centerPosition}\n" +
+                    $"Raduis:{centerRadius}";
             }
         }
         /// <summary>
@@ -188,80 +189,14 @@ using Syacapachi.Controller;
 
                 if (!anyVisible) continue;
 
-                // =========================
-                // サイズスコア（0〜1）
-                // =========================
-                float width = Mathf.Clamp01(maxX - minX);
-                float height = Mathf.Clamp01(maxY - minY);
-                float size = Mathf.Clamp01((maxX - minX) * (maxY - minY));
-
-                // =========================
-                // 中央スコア（0〜1）
-                // =========================
-                float centerX = (minX + maxX) * 0.5f;
-                float centerY = (minY + maxY) * 0.5f;
-                
-
-                float centerScore = CalcrateCenterScore(
-                    minX, minY,
-                    maxX, maxY,
-                    centerX, centerY
-                    );
-
-                Vector2 vpPos = new Vector2(centerX, centerY);
-
-                // 半径：バウンディング円として計算
-                float radius = Mathf.Sqrt(width * width + height * height) * 0.5f;
-
                 result.Add(new PhotoObjectInfo(
                     rend.gameObject,
-                    centerScore,
-                    size,
-                    vpPos,
-                    radius
+                    minX, maxX,
+                    minY,maxY
                 ));
             }
 
             return result;
-        }
-        /// <summary>
-        /// 中心度0~1
-        /// </summary>
-        /// <param name="minX"></param>
-        /// <param name="minY"></param>
-        /// <param name="maxX"></param>
-        /// <param name="maxY"></param>
-        /// <param name="center"></param>
-        /// <returns></returns>
-        public static float CalcrateCenterScore(
-            float minX, 
-            float minY, 
-            float maxX, 
-            float maxY, 
-            float centerX, 
-            float centerY
-            )
-        {
-            float half = 0.5f;
-            //画像が中心を覆っているなら満点
-            if (   minX <= half
-                && half <= maxX
-                && minY <= half
-                && half <= maxY
-            )
-                return 1f;
-
-            //写真中央から、最寄りの長方形上の点
-
-            float nearX = Mathf.Clamp(centerX, minX, maxX);
-            float nearY = Mathf.Clamp(centerY, minY, maxY);
-
-            float dist = Vector2.Distance(
-                new Vector2(nearX, nearY),
-                new Vector2(half, half)
-                );
-
-            return 1f - Mathf.Clamp01(dist);
         }
     }
 

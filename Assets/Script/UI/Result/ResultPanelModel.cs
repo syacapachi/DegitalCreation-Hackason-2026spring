@@ -1,84 +1,27 @@
-﻿using Syacapachi.Attribute;
-using Syacapachi.Camera;
-using UnityEngine;
+﻿using Syacapachi.Camera;
+using Syacapachi.Contracts;
+using Syacapachi.Manager;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ResultPanelModel : MonoBehaviour
 {
     [SerializeField] private PhotoManager photoManager;
     [SerializeField] private CameraCapture cameraCapture;
-    
-    [SerializeField] float _totalScore = 0;
+    [SerializeField] PhotoScoreManager scoreManager;
 
-    private void Awake()
-    {
-        SubscribeEvent();
-    }
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    private static void InitInactiveModels()
-    {
-        var models = Object.FindObjectsByType<ResultPanelModel>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-        foreach (var model in models)
-        {
-            model.SubscribeEvent();
-        }
-    }
-
-    private void SubscribeEvent()
-    {
-        if (cameraCapture != null)
-        {
-            cameraCapture.OnCaptureComplete -= AccumulateScore; // 重複登録防止
-            cameraCapture.OnCaptureComplete += AccumulateScore;
-        }
-        else
-        {
-            Debug.LogWarning("[ResultPanelModel] CameraCapture is not assigned in Inspector.");
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (cameraCapture != null)
-        {
-            cameraCapture.OnCaptureComplete -= AccumulateScore;
-        }
-    }
-
-    /// <summary>
-    /// カメラ撮影完了イベントが呼ばれるたびに、写真内のオブジェクト情報を元にスコアを加算
-    /// </summary>
-    private void AccumulateScore(CameraCapture.PhotoData data)
-    {
-        if (data == null || data.info == null) return;
-        if(photoManager.IsMaxPhotos) return;
-        foreach (var info in data.info)
-        {
-            _totalScore += info.GetScore();
-        }
-    }
-
+    private IPhotoAlbum Album => photoManager;
+    private ICaptureService Capture => cameraCapture;
     public List<Texture2D> GetPhotos()
     {
-        return photoManager != null ? photoManager.GetPhotos() : new List<Texture2D>();
+        return Album != null ? Album.GetPhotos() : new List<Texture2D>();
     }
     public List<CameraCapture.PhotoData> GetPhotoData()
     {
-        return photoManager != null ? photoManager.GetPhotoDatas() : new List<CameraCapture.PhotoData>();
+        return Album != null ? Album.GetPhotoDatas() : new List<CameraCapture.PhotoData>();
     }
     public string ScoreText
     {
-        get { return _totalScore.ToString("n1"); }
-    }
-
-    [Header("Debug")]
-    [SerializeField] private int debugAddScoreAmount = 100;
-
-    [OnInspectorButton]
-    public void DebugAddScore()
-    {
-        _totalScore += debugAddScoreAmount;
-        Debug.Log($"[Debug] デバッグでスコアを追加しました。現在の合計: {_totalScore}");
+        get { return scoreManager.TotalScore.ToString("n1"); }
     }
 }

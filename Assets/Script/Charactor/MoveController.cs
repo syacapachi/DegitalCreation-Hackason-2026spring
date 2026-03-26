@@ -1,6 +1,5 @@
 ﻿using Syacapachi.Attribute;
 using Syacapachi.Controller;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class MoveController : MonoBehaviour

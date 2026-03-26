@@ -1,15 +1,15 @@
 ﻿namespace Syacapachi.Camera
 {
+    using Syacapachi.Contracts;
     using Syacapachi.Utils;
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using UnityEngine;
     using UnityEngine.Rendering;
 
     [RequireComponent(typeof(Camera))]
-    public class CameraCapture : MonoBehaviour
+    public class CameraCapture : MonoBehaviour, ICaptureService
     {
         /// <summary>
         /// 撮影データの構造体(structは値型)
@@ -183,11 +183,11 @@
                 done = true;
             });
 
-            var visibleObj = PhotoAnalyzer.GetVisibleObject(targetCamera, targetLayerMask, m_RayCount);
+            HashSet<PhotoAnalyzer.PhotoObjectInfo> visibleObj = PhotoAnalyzer.GetVisibleObject(targetCamera, targetLayerMask, m_RayCount);
 
             DebugObject(visibleObj);
 
-            //GPからの書き出しを待つ
+            //GPUからの書き出しを待つ
             yield return new WaitUntil(() => done);
 
             // 復元

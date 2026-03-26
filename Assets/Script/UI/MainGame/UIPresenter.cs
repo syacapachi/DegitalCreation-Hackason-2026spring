@@ -1,9 +1,11 @@
-using System;
+﻿using System;
 using System.Collections;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Syacapachi.Attribute;
 using Syacapachi.Camera;
+using Syacapachi.Contracts;
+using Syacapachi.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +24,11 @@ public class UIPresenter : MonoBehaviour
 
     private UIModel _model;
 
+    private ICaptureService Capture => cameraCapture;
+    private IPhotoAlbum Album => photoManager;
+    private IMusicPlayer Music => audioManager;
+    private IShutterFeedback ShutterFeedback => audioManager;
+
     public event Action OnCountdownStart;
     public event Action OnCountdownEnd;
 
@@ -35,15 +42,15 @@ public class UIPresenter : MonoBehaviour
 
         OnCountdownStart += () =>
         {
-            if (audioManager != null)
-                audioManager.PlayBackgroudMusic(); //カウントダウン開始時の処理
+            if (Music != null)
+                Music.PlayBackgroundMusic();
             else
                 Debug.LogWarning("[UIPresenter] audioManager is missing in the Inspector!");
         };
 
-        if (cameraCapture != null)
+        if (Capture != null)
         {
-            cameraCapture.OnShutter += () => ShutterAnimation().Forget();
+            Capture.OnShutter += () => ShutterAnimation().Forget();
         }
     }
 
@@ -52,7 +59,7 @@ public class UIPresenter : MonoBehaviour
         UpdatePhotoCountDisplay(); // 初期表示
         StartCountdown(initialCountdown); // シーン読み込み時に指定時間でカウントダウンを開始
 
-        if (cameraCapture != null)
+        if (Capture != null)
         {
             // === 暫定デバッグ: CameraCapture の位置を表示 ===
             string path = cameraCapture.name;
@@ -66,12 +73,12 @@ public class UIPresenter : MonoBehaviour
             // ===========================================
 
             // 単発・連写問わず、撮影完了時に枚数表示を更新
-            cameraCapture.OnCaptureComplete += (data) => 
+            Capture.OnCaptureComplete += (data) => 
             {
                 StartCoroutine(UpdatePhotoCountNextFrame());
             };
 
-            cameraCapture.OnBurstProgress += (current, total) => 
+            Capture.OnBurstProgress += (current, total) => 
             {
                 UpdateInfoText($"連写中: {current} / {total}");
             };
@@ -80,6 +87,7 @@ public class UIPresenter : MonoBehaviour
         {
             Debug.LogWarning("[DEBUG] cameraCapture check: missing reference in UIPresenter.");
         }
+        audioManager ??= ManagerLocator.Instance.AudioManager;
     }
 
     private IEnumerator UpdatePhotoCountNextFrame()
@@ -91,10 +99,10 @@ public class UIPresenter : MonoBehaviour
 
     private void UpdatePhotoCountDisplay()
     {
-        if (photoManager == null) return;
+        if (Album == null) return;
         
-        int currentCount = photoManager.GetPhotos().Count;
-        int maxCount = photoManager.maxPhotos;
+        int currentCount = Album.GetPhotos().Count;
+        int maxCount = Album.MaxPhotos;
         int remaining = maxCount - currentCount;
         
         // 撮影枚数と残り枚数の2つの情報を表示
@@ -109,7 +117,7 @@ public class UIPresenter : MonoBehaviour
 
     private async UniTask ShutterAnimation()
     {
-        audioManager.PlayShutterSound();
+        ShutterFeedback?.PlayShutterSound();
         await FadeIn();
         blackScreen.GetComponent<Image>().DOFade(0f, 0.2f);
         cameraFrame.transform.DOScale(1f, 0.2f);

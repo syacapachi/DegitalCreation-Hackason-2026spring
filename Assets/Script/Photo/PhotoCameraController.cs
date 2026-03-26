@@ -3,6 +3,7 @@ namespace Syacapachi.Controller
 {
     using Syacapachi.Attribute;
     using Syacapachi.Camera;
+    using Syacapachi.Contracts;
     using Syacapachi.Utils;
     using System.Collections;
     using UnityEngine;
@@ -19,6 +20,7 @@ namespace Syacapachi.Controller
         [SerializeField] bool overridden = false;
         [SerializeField] float showResultTime = 0.2f;
         private WaitForSeconds waitShow;
+        private IPhotoDetailRenderer photoDetailRenderer => viewer;
         Coroutine photoCorutine;
         private void Start()
         {
@@ -50,8 +52,8 @@ namespace Syacapachi.Controller
         private void OnCaptureComplete(PhotoData data) 
         {
             manager.AddPhoto(data, overridden);
-            viewer.RefreshPicture();
-            viewer.ShowDetail(data);
+            photoDetailRenderer.RefreshPicture();
+            photoDetailRenderer.ShowDetail(data);
             Debug.Log("capture success");
             if(photoCorutine != null)
             {

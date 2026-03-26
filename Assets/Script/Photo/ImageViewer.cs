@@ -1,16 +1,17 @@
 ﻿namespace Syacapachi.Controller
 {
-    using Syacapachi.Attribute;
     using Syacapachi.Camera;
+    using Syacapachi.Contracts;
+    using Syacapachi.Manager;
     using System.Collections.Generic;
-    using System.Linq;
     using TMPro;
     using UnityEngine;
 
     using UnityEngine.UI;
 
-    public class ImageViewer : MonoBehaviour
+    public class ImageViewer : MonoBehaviour, IPhotoDetailRenderer
     {
+        [SerializeField] PhotoScoreManager scoreManager;
         [SerializeField] protected RawImage display;
         [SerializeField] Sprite circleSprite;
         [SerializeField] GameObject imagePrefab;    
@@ -27,21 +28,22 @@
                 imageNoActiveQueue.Enqueue(img);
             }
         }
-        public void Show(Texture2D tex)
+        public RectTransform Show(Texture2D tex)
         {
             display.texture = tex;
+            return display.rectTransform;
         }
         public void ShowDetail(CameraCapture.PhotoData photo)
         {
-            Show(photo.texture);
+            var rect = Show(photo.texture);
             foreach (var info in photo.info)
             {
-                PlaceCircle(display.rectTransform, info.viewportPosition, info.viewportRadius, info.GetScore(),info.drawColor);
+                PlaceCircle(rect, info.centerPosition, info.centerRadius, scoreManager.GetScore(info),info.drawColor);
             }
         }
         public void PlaceCircle(RectTransform parent, Vector2 viewportPos, float size, float score,Color drawColor)
         {
-            Image img = imageNoActiveQueue.Count > 0 ? imageNoActiveQueue.Dequeue() : Instantiate(imagePrefab, display.rectTransform).GetComponent<Image>();
+            Image img = imageNoActiveQueue.Count > 0 ? imageNoActiveQueue.Dequeue() : Instantiate(imagePrefab, parent).GetComponent<Image>();
             img.transform.SetParent(parent);
 
             // 円スプライトを設定
