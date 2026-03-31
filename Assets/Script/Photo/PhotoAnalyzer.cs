@@ -1,12 +1,13 @@
 ﻿namespace Syacapachi.Utils
 {
     using Syacapachi.Controller;
+    using System;
     using System.Collections.Generic;
     using UnityEngine;
 
     public static class PhotoAnalyzer
     {
-        public readonly struct PhotoObjectInfo
+        public readonly struct PhotoObjectInfo : IEquatable<PhotoObjectInfo>
         {
             public readonly int MaxScore;
 
@@ -59,6 +60,17 @@
                     drawColor = targetData.Color;
                 }
             }
+
+            public bool Equals(PhotoObjectInfo other)
+            {
+                return gameObject == other.gameObject;
+            }
+
+            public override bool Equals(object obj)
+                => obj is PhotoObjectInfo other && Equals(other);
+
+            public override int GetHashCode()
+                => gameObject != null ? gameObject.GetHashCode() : 0;
             public override readonly string ToString()
             {
                 return
