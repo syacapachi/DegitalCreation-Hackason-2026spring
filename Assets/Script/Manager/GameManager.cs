@@ -2,35 +2,25 @@
 using Syacapachi.Contracts;
 using System;
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] UIPresenter uIPresenter;
     [SerializeField] private AudioManager audioManager;
     [Header("Game Settings")]
-    [SerializeField] private float initialCountdown = 100f;
+    [SerializeField] private int initialCountdown = 100;
     private bool isCountingDown = false;
     private static WaitForSeconds wait025s = new WaitForSeconds(0.25f);
-    public event Action OnCountdownStart;
-    public event Action OnCountdownEnd;
+    [Header("Publish Events")]
+    [SerializeField] VoidEventSO OnCountdownStart;
+    [SerializeField] VoidEventSO OnCountdownEnd;
+    [SerializeField] BurstProgressEvent countDownEvent;
 
     private IMusicPlayer Music => audioManager;
     private void Start()
     {
         GameStart();
-        OnCountdownEnd += () =>
-        {
-            uIPresenter.SetResultPanelActive(true); //カウントダウン終了時の処理
-        };
-
-        OnCountdownStart += () =>
-        {
-            if (Music != null)
-                Music.PlayBackgroundMusic();
-            else
-                Debug.LogWarning("[UIPresenter] audioManager is missing in the Inspector!");
-        };
     }
     private void GameStart()
     {
@@ -40,15 +30,16 @@ public class GameManager : MonoBehaviour
     /// カウントダウンを開始
     /// </summary>
     /// <param name="duration">秒数</param>
-    private void StartCountdown(float duration)
+    private void StartCountdown(int duration)
     {
         if (isCountingDown) return;
         StartCoroutine(CountdownRoutine(duration));
     }
-    private IEnumerator CountdownRoutine(float duration)
+    private IEnumerator CountdownRoutine(int duration)
     {
         isCountingDown = true;
         OnCountdownStart?.Invoke();
+        Music.PlayBackgroundMusic();
         int lastSecond = -1;
         for (float timer = initialCountdown; 0f < timer; timer -= 0.25f)
         {
@@ -57,17 +48,17 @@ public class GameManager : MonoBehaviour
             if (currentSecond != lastSecond)
             {
                 lastSecond = currentSecond;
-                uIPresenter.UpdateCountdownDisplay(currentSecond, duration);
+                countDownEvent.Invoke(new Syacapachi.Camera.CameraCapture.BurstProgress(currentSecond, duration));
             }
 
             yield return wait025s;
         }
 
-        uIPresenter.UpdateCountdownDisplay(0, duration);
+        countDownEvent.Invoke(new Syacapachi.Camera.CameraCapture.BurstProgress(0, duration));
         OnCountdownEnd?.Invoke();
     }
     [Header("Debug")]
-    [SerializeField] private float debugCountdownDuration = 10f;
+    [SerializeField] private int debugCountdownDuration = 10;
 
     [OnInspectorButton]
     public void DebugStartCountdown()

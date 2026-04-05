@@ -19,6 +19,10 @@ namespace Syacapachi.Controller
         [SerializeField] InputAction captureAction;
         [SerializeField] bool overridden = false;
         [SerializeField] float showResultTime = 0.2f;
+        [Header("Subscribe Event")]
+        [SerializeField] PhotoDataEvent OnCaptureComplete;
+        [SerializeField] VoidEventSO OnCaptureFailed;
+        
         private WaitForSeconds waitShow;
         private IPhotoDetailRenderer photoDetailRenderer => viewer;
         Coroutine photoCorutine;
@@ -30,15 +34,15 @@ namespace Syacapachi.Controller
         {
             captureAction.performed += OnCaptureAction;
             captureAction.Enable();
-            capture.OnCaptureComplete += OnCaptureComplete;
-            capture.OnCaptureFailed += OnCaptureFailed;
+            OnCaptureComplete.Register(OnCaptureCompleteHandle);
+            OnCaptureFailed.Register(OnCaptureFailedHandle);
         }
         private void OnDisable()
         {
             captureAction.performed -= OnCaptureAction;
             captureAction.Disable();
-            capture.OnCaptureComplete -= OnCaptureComplete; 
-            capture.OnCaptureFailed -= OnCaptureFailed;
+            OnCaptureComplete.Unregister(OnCaptureCompleteHandle); 
+            OnCaptureFailed.Unregister(OnCaptureFailedHandle);
         }
         private void OnCaptureAction(InputAction.CallbackContext context)
         {
@@ -49,7 +53,7 @@ namespace Syacapachi.Controller
         {
             capture.Capture();
         }
-        private void OnCaptureComplete(PhotoData data) 
+        private void OnCaptureCompleteHandle(PhotoData data) 
         {
             manager.AddPhoto(data, overridden);
             photoDetailRenderer.RefreshPicture();
@@ -62,7 +66,7 @@ namespace Syacapachi.Controller
             photoCorutine = StartCoroutine(ShowResultCorutine());
 
         }
-        private void OnCaptureFailed()
+        private void OnCaptureFailedHandle()
         {
             Debug.Log("Capture Faild");
         }

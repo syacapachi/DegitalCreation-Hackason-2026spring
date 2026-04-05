@@ -286,9 +286,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 668e4e0612ec8d645bc1dd9cab9e544e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  uIPresenter: {fileID: 0}
   audioManager: {fileID: 4705311072957220862}
-  initialCountdown: 100
+  initialCountdown: 10
+  OnCountdownStart: {fileID: 11400000, guid: 783026d05d7880e419bbc986eb5951df, type: 2}
+  OnCountdownEnd: {fileID: 11400000, guid: f138bd7798e01c24d9e0f4f2c90c0788, type: 2}
+  countDownEvent: {fileID: 11400000, guid: e456b54036885014783b19b4eefb28ca, type: 2}
   debugCountdownDuration: 10
 --- !u!1 &7242288508969226001
 GameObject:

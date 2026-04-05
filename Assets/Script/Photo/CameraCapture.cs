@@ -1,5 +1,6 @@
 ﻿namespace Syacapachi.Camera
 {
+    using Syacapachi.Attribute;
     using Syacapachi.Contracts;
     using Syacapachi.Utils;
     using System;
@@ -35,6 +36,7 @@
                 this.timestamp = Time.timeAsDouble;
             }
         }
+        //[GenerateEvent(typeof(GameEventSOBase<>))]
         public class PhotoData
         {
             public readonly Texture2D texture;
@@ -46,6 +48,22 @@
                 texture = texture2D;
                 this.bytes = bytes;
                 this.info = info;
+            }
+        }
+        //[GenerateEvent(typeof(GameEventSOBase<>))]
+        public readonly struct BurstProgress
+        {
+            public readonly int current;
+            public readonly int total;
+
+            public BurstProgress(int current,int total)
+            {
+                this.current = current;
+                this.total = total;
+            }
+            public readonly override string ToString()
+            {
+                return $"{current}/{total}";
             }
         }
         
@@ -67,23 +85,39 @@
         [Header("Burst")]
         [SerializeField] private float burstInterval = 0.1f;
 
+        [Header("Publish Event")]
+        [SerializeField] VoidEventSO OnShutter;
+        [SerializeField] PhotoDataEvent OnCaptureComplete;
+        [SerializeField] VoidEventSO OnCaptureFailed;
+        [SerializeField] BurstProgressEvent OnBurstProgress;
+        [SerializeField] VoidEventSO OnBurstFinished;
         // =========================
         // 🎯 イベント（全部メインスレッド）
         // =========================
 
-        public event Action OnShutter;
-        public event Action<PhotoData> OnCaptureComplete;
-        public event Action OnCaptureFailed;
+        //public event Action OnShutter;
+        //public event Action<PhotoData> OnCaptureComplete;
+        //public event Action OnCaptureFailed;
 
-        /// <summary>進捗通知（現在枚数, 総枚数）</summary>
-        public event Action<int, int> OnBurstProgress;
+        ///// <summary>進捗通知（現在枚数, 総枚数）</summary>
+        //public event Action<int, int> OnBurstProgress;
 
-        /// <summary>バースト完了</summary>
-        public event Action OnBurstFinished;
+        ///// <summary>バースト完了</summary>
+        //public event Action OnBurstFinished;
 
         // =========================
 
         private bool isCapturing = false;
+
+        VoidEventSO ICaptureService.OnShutter => OnShutter;
+
+        PhotoDataEvent ICaptureService.OnCaptureComplete => OnCaptureComplete;
+
+        VoidEventSO ICaptureService.OnCaptureFailed => OnCaptureFailed;
+
+        BurstProgressEvent ICaptureService.OnBurstProgress => OnBurstProgress;
+
+        VoidEventSO ICaptureService.OnBurstFinished => OnBurstFinished;
 
         // =========================
         // 単発撮影
@@ -112,7 +146,7 @@
                 yield return CaptureRoutine_Internal();
 
                 // 📊 進捗通知
-                OnBurstProgress?.Invoke(i + 1, count);
+                OnBurstProgress?.Invoke(new BurstProgress(i + 1, count));
 
                 if (i < count - 1)
                 {

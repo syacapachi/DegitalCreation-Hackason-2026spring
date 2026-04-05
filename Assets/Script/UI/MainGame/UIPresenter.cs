@@ -8,19 +8,26 @@ using Syacapachi.Contracts;
 using Syacapachi.Manager;
 using UnityEngine;
 using UnityEngine.UI;
+using static Syacapachi.Camera.CameraCapture;
 
 
 public class UIPresenter : MonoBehaviour
 {
     [SerializeField] private UIView uiView;
-    [SerializeField] private CameraCapture cameraCapture;
     [SerializeField] private PhotoManager photoManager;
     [SerializeField] private GameObject cameraFrame;
     [SerializeField] private GameObject blackScreen;
+    [Header("Subscribe Event")]
+    [SerializeField] VoidEventSO OnShutter;
+    [SerializeField] PhotoDataEvent OnCaptureComplete;
+    [SerializeField] VoidEventSO OnCaptureFailed;
+    [SerializeField] BurstProgressEvent OnBurstProgress;
+    [SerializeField] VoidEventSO OnCountdownStart;
+    [SerializeField] VoidEventSO OnCountdownEnd;
+    [SerializeField] BurstProgressEvent countDownEvent;
 
     private UIModelSetting _model;
 
-    private ICaptureService Capture => cameraCapture;
     private IPhotoAlbum Album => photoManager;
 
     
@@ -28,46 +35,35 @@ public class UIPresenter : MonoBehaviour
     {
         _model = new UIModelSetting();
 
-        if (Capture != null)
-        {
-            Capture.OnShutter += () => ShutterAnimation().Forget();
-        }
+       
     }
 
     private void Start()
     {
-        UpdatePhotoCountDisplay(); // 初期表示
-
-        if (Capture != null)
-        {
-            // === 暫定デバッグ: CameraCapture の位置を表示 ===
-            string path = cameraCapture.name;
-            Transform p = cameraCapture.transform.parent;
-            while (p != null)
-            {
-                path = p.name + "/" + path;
-                p = p.parent;
-            }
-            Debug.Log($"[DEBUG] CameraCapture is attached to: {path}");
-            // ===========================================
-
-            // 単発・連写問わず、撮影完了時に枚数表示を更新
-            Capture.OnCaptureComplete += (data) => 
-            {
-                StartCoroutine(UpdatePhotoCountNextFrame());
-            };
-
-            Capture.OnBurstProgress += (current, total) => 
-            {
-                UpdateInfoText($"連写中: {current} / {total}");
-            };
-        }
-        else
-        {
-            Debug.LogWarning("[DEBUG] cameraCapture check: missing reference in UIPresenter.");
-        }
+        UpdatePhotoCountDisplay(); // 初期表示  
     }
+    private void OnEnable()
+    {
+        OnShutter.Register(OnShuterHandle);
+        // 単発・連写問わず、撮影完了時に枚数表示を更新
+        OnCaptureComplete.Register(CaptureCompleteHandle);
 
+        OnBurstProgress.Register(BurstProgressHandle);
+        OnCountdownEnd.Register(()=>SetResultPanelActive(true)); //カウントダウン終了時の処理)
+        countDownEvent.Register(t => UpdateCountdownDisplay(t.current,t.total));
+    }
+    private void OnDisable()
+    {
+        OnShutter.Unregister(OnShuterHandle);
+        OnCaptureComplete.Unregister(CaptureCompleteHandle);
+        OnBurstProgress.Unregister(BurstProgressHandle);
+        OnCountdownEnd.Unregister(() => SetResultPanelActive(true));
+        countDownEvent.Unregister(t => UpdateCountdownDisplay(t.current, t.total));
+    }
+    private void OnShuterHandle()
+    {
+        ShutterAnimation().Forget();
+    }
     private IEnumerator UpdatePhotoCountNextFrame()
     {
         // PhotoManager 側に写真が追加（AddPhoto）されるのを待つため1フレーム遅延
@@ -109,9 +105,15 @@ public class UIPresenter : MonoBehaviour
         await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
     }
 
-    
+    private void BurstProgressHandle(BurstProgress progress)
+    {
+        UpdateInfoText($"連写中: {progress.current} / {progress.total}");
+    }
 
-    
+    private void CaptureCompleteHandle(PhotoData data)
+    {
+        StartCoroutine(UpdatePhotoCountNextFrame());
+    }
 
     public void UpdateCountdownDisplay(int currentSecond, float totalDuration)
     {

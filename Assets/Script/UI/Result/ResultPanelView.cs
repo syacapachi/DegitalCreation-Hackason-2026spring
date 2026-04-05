@@ -63,7 +63,13 @@ public class ResultPanelView : MonoBehaviour,IPhotoDetailRenderer
             PlaceCircle(rect, info.centerPosition, info.centerRadius, scoreManager.GetScore(info), info.drawColor);
         }
     }
-    public void PlaceCircle(RectTransform parent, Vector2 viewportPos, float size, float score, Color drawColor)
+    public void AddPhotoData(CameraCapture.PhotoData photoData)
+    {
+        if (photoItemPrefab == null) return;
+
+        ShowDetail(photoData);
+    }
+    private void PlaceCircle(RectTransform parent, Vector2 viewportPos, float size, float score, Color drawColor)
     {
         Image img = imageNoActiveQueue.Count > 0 ? imageNoActiveQueue.Dequeue() : Instantiate(imagePrefab, parent).GetComponent<Image>();
         img.transform.SetParent(parent);
@@ -106,22 +112,7 @@ public class ResultPanelView : MonoBehaviour,IPhotoDetailRenderer
     }
     
     
-    public void AddPhotoData(CameraCapture.PhotoData photoData)
-    {
-        if (photoItemPrefab == null) return;
-
-        RawImage rawImage = rawImagesNoActiveQueue.Count > 0 ?
-                                rawImagesNoActiveQueue.Dequeue() :
-                                Instantiate(photoItemPrefab, contentArea.transform).GetComponentInChildren<RawImage>();
-        if (rawImage != null)
-        {
-            rawImage.texture = photoData.texture;
-        }
-        ShowDetail(photoData);
-
-        rawImagesActiveQueue.Enqueue(rawImage);
-        rawImage.gameObject.SetActive(true);
-    }
+    
 
     
 

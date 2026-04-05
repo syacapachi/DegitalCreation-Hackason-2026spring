@@ -575,8 +575,14 @@ MonoBehaviour:
   height: 1024
   useJPG: 0
   jpgQuality: 75
-  m_RayCount: 50
+  m_RayCount: 100
+  rayMaxDistance: 300
   burstInterval: 0.1
+  OnShutter: {fileID: 11400000, guid: 3ff0cd28609d45f468e33b2f62d3c54b, type: 2}
+  OnCaptureComplete: {fileID: 11400000, guid: fcc6b7d1703dee44885e7770b092ccf0, type: 2}
+  OnCaptureFailed: {fileID: 11400000, guid: 67237fd0e4c3f5d48970d593a750cae2, type: 2}
+  OnBurstProgress: {fileID: 11400000, guid: bcbdf62d569e3c64385b67d148d22e57, type: 2}
+  OnBurstFinished: {fileID: 11400000, guid: 5a3231514e53298419764fcf87b3deab, type: 2}
 --- !u!1 &4130948584327729782
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,7 +774,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &3693938446991801613
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -839,10 +845,10 @@ MonoBehaviour:
   isFlying: 1
   gravity: 9.81
   steerRate: 1
-  liftRate: 0.432
+  liftRate: 0.14
   drag: 0.01
   maxSpeed: 50
-  stallSpeed: 10
+  stallSpeed: 100
   force: 40
 --- !u!1 &6024341657256879830
 GameObject:
@@ -5988,6 +5994,8 @@ MonoBehaviour:
     m_Flags: 0
   overridden: 0
   showResultTime: 1
+  OnCaptureComplete: {fileID: 11400000, guid: fcc6b7d1703dee44885e7770b092ccf0, type: 2}
+  OnCaptureFailed: {fileID: 11400000, guid: 67237fd0e4c3f5d48970d593a750cae2, type: 2}
 --- !u!114 &7036254803754866418
 MonoBehaviour:
   m_ObjectHideFlags: 0

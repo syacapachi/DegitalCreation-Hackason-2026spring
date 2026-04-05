@@ -661,13 +661,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIPresenter
   uiView: {fileID: 5642737639145886083}
-  cameraCapture: {fileID: 0}
   photoManager: {fileID: 0}
-  audioManager: {fileID: 0}
   cameraFrame: {fileID: 1466110593942136860}
   blackScreen: {fileID: 1247054590532595526}
-  initialCountdown: 100
-  debugCountdownDuration: 100
+  OnShutter: {fileID: 11400000, guid: 3ff0cd28609d45f468e33b2f62d3c54b, type: 2}
+  OnCaptureComplete: {fileID: 11400000, guid: fcc6b7d1703dee44885e7770b092ccf0, type: 2}
+  OnCaptureFailed: {fileID: 11400000, guid: 67237fd0e4c3f5d48970d593a750cae2, type: 2}
+  OnBurstProgress: {fileID: 11400000, guid: bcbdf62d569e3c64385b67d148d22e57, type: 2}
+  OnCountdownStart: {fileID: 11400000, guid: 783026d05d7880e419bbc986eb5951df, type: 2}
+  OnCountdownEnd: {fileID: 11400000, guid: f138bd7798e01c24d9e0f4f2c90c0788, type: 2}
+  countDownEvent: {fileID: 11400000, guid: e456b54036885014783b19b4eefb28ca, type: 2}
 --- !u!114 &5642737639145886083
 MonoBehaviour:
   m_ObjectHideFlags: 0
