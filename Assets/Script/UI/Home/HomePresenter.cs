@@ -9,6 +9,7 @@ public class HomePresenter : MonoBehaviour
     void Start()
     {
         homeView.OnStartClicked += () => SceneManager.LoadScene("GameScene");
+        homeView.OnSettingButtonClicked += () => homeView.settingPanel.SetActive(true); 
     }
 
     // Update is called once per frame
