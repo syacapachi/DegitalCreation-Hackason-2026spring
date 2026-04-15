@@ -1,5 +1,6 @@
-﻿using Syacapachi.Attribute;
+using Syacapachi.Attribute;
 using Syacapachi.Contracts;
+using Syacapachi.Controller;
 using System;
 using System.Collections;
 using System.Threading;
@@ -8,6 +9,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private AudioManager audioManager;
+    [SerializeField] private PlayerInputReciever playerInputReciever;
     [Header("Game Settings")]
     [SerializeField] private int initialCountdown = 100;
     private bool isCountingDown = false;
@@ -18,6 +20,40 @@ public class GameManager : MonoBehaviour
     [SerializeField] BurstProgressEvent countDownEvent;
 
     private IMusicPlayer Music => audioManager;
+
+    private void OnEnable()
+    {
+        if (playerInputReciever != null)
+        {
+            Debug.Log($"[GameManager] {playerInputReciever.name} の BoostAction を購読しました");
+            playerInputReciever.BoostAction += HandleFirstBoost;
+        }
+        else
+        {
+            Debug.LogWarning("[GameManager] playerInputReciever がアサインされていないため、ブースト時にBGMが再生されません。");
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (playerInputReciever != null)
+        {
+            playerInputReciever.BoostAction -= HandleFirstBoost;
+        }
+    }
+
+    private void HandleFirstBoost()
+    {
+        Debug.Log("[GameManager] 最初のブーストを検知。BGMを開始します。");
+        Music.PlayBackgroundMusic();
+
+        // 最初の1回のみ実行するため、自身をイベントから削除
+        if (playerInputReciever != null)
+        {
+            playerInputReciever.BoostAction -= HandleFirstBoost;
+        }
+    }
+
     private void Start()
     {
         GameStart();
@@ -39,7 +75,6 @@ public class GameManager : MonoBehaviour
     {
         isCountingDown = true;
         OnCountdownStart?.Invoke();
-        Music.PlayBackgroundMusic();
         int lastSecond = -1;
         for (float timer = initialCountdown; 0f < timer; timer -= 0.25f)
         {

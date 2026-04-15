@@ -1,4 +1,4 @@
-﻿namespace Syacapachi.Controller
+namespace Syacapachi.Controller
 {
     using System;
     using System.Collections;
@@ -61,6 +61,7 @@
         private void boostHandleCallback(InputAction.CallbackContext context) 
         {
             if (!canBoost) return;
+            Debug.Log("BoostAction Fired!");
             BoostAction.Invoke();
             StartCoroutine(BoostCorutine());
         }
