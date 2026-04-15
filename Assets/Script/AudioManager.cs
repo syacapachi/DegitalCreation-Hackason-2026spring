@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour, IMusicPlayer, IShutterFeedback
     public void PlayBackgroundMusic()
     {
         backMusic.Play();
+        Debug.Log("バックミュージックが再生されました。");
     }
 
     /// <summary>互換用（旧スペル）。新規コードは <see cref="PlayBackgroundMusic"/> を使用。</summary>
