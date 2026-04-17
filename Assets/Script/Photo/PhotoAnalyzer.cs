@@ -1,6 +1,7 @@
-﻿namespace Syacapachi.Utils
+namespace Syacapachi.Utils
 {
     using Syacapachi.Controller;
+    using Syacapachi.ScriptableObject;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -27,6 +28,7 @@
             public readonly float width;
             public readonly float height;
             public readonly float size;
+            public readonly PhotoTargetType targetType;
 
             public PhotoObjectInfo(GameObject obj,float minX, float maxX, float minY, float maxY)
             {
@@ -53,11 +55,13 @@
                     Debug.LogWarning($"Cant Find PhotoTargetController At {gameObject.name}");
                     MaxScore = 100;
                     drawColor = Color.white;
+                    targetType = PhotoTargetType.Normal;
                 }
                 else
                 {
                     MaxScore = targetData.Score;
                     drawColor = targetData.Color;
+                    targetType = targetData.TargetType;
                 }
             }
 
@@ -74,6 +78,7 @@
             public override readonly string ToString()
             {
                 return
+                    $"Type:{targetType}\n" +
                     $"Size:{size}\n" +
                     $"Object:{gameObject.name}\n" +
                     $"Center:{centerPosition}\n" +
