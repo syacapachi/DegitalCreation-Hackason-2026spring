@@ -11,6 +11,7 @@ namespace Syacapachi.Controller
         InputAction moveAction;
         InputAction lookAction;
         InputAction boostAction;
+        InputAction respawnAction;
 
         Vector2 moveInput = Vector2.zero;
         Vector2 lookInput = Vector2.zero;
@@ -26,6 +27,7 @@ namespace Syacapachi.Controller
         public Vector2 LookInput => lookInput;
 
         public event Action BoostAction;
+        public event Action RespawnAction;
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -33,6 +35,7 @@ namespace Syacapachi.Controller
             moveAction = InputSystem.actions["Move"];
             lookAction = InputSystem.actions["Look"];
             boostAction = InputSystem.actions["Accelarate"];
+            respawnAction = InputSystem.actions["Respawn"];
         }
         private void OnEnable()
         {
@@ -41,6 +44,9 @@ namespace Syacapachi.Controller
             lookAction.performed += LookHandleCallback;
             lookAction.canceled += LookHandleCallback;
             boostAction.performed += boostHandleCallback;
+            respawnAction.performed += RespawnHandleCallback;
+            respawnAction.canceled += RespawnHandleCallback;
+            
         }
         private void OnDisable()
         {
@@ -49,6 +55,8 @@ namespace Syacapachi.Controller
             lookAction.performed -= LookHandleCallback;
             lookAction.canceled -= LookHandleCallback;
             boostAction.performed -= boostHandleCallback;
+            respawnAction.performed -= RespawnHandleCallback;
+            respawnAction.canceled -= RespawnHandleCallback;
         }
         private void MoveHandleCallback(InputAction.CallbackContext context)
         {
@@ -64,6 +72,12 @@ namespace Syacapachi.Controller
             Debug.Log("BoostAction Fired!");
             BoostAction.Invoke();
             StartCoroutine(BoostCorutine());
+        }
+        private void RespawnHandleCallback(InputAction.CallbackContext context)
+        {
+            if (!context.performed) return; // ボタンを押した瞬間のみ判定する
+            Debug.Log("リスポーンボタンが押されました");
+            RespawnAction?.Invoke();
         }
         private IEnumerator BoostCorutine()
         {
