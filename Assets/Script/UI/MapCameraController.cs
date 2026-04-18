@@ -6,24 +6,26 @@ public class MapCameraController : MonoBehaviour
     [SerializeField] private Vector3 initialPos;
     [SerializeField] private Transform player;
     [SerializeField] private float ySolidPos;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Transform cameraTransform;
+
+    private void Awake()
     {
-        
+        if (mapCamera != null)
+        {
+            // Transformへのアクセスは毎フレーム呼ぶとコストがかかるためキャッシュする
+            cameraTransform = mapCamera.transform;
+        }
     }
 
-    private void Update()
+    // プレイヤーの移動(Update)が完了した後にカメラを動かすことで画面のカクつきを防ぐ
+    private void LateUpdate()
     {
-        MoveMapCamera(); 
-    }
+        if (cameraTransform == null || player == null) return;
 
-    private void MoveMapCamera()
-    {
-        Vector3 newPos = mapCamera.transform.position;
-        //playerのx,z座標に合わせる
-        newPos.x = player.position.x; 
-        newPos.y = ySolidPos; //y座標は固定にするか可変にするかは要検討
-        newPos.z = player.position.z;
-        mapCamera.transform.position = newPos;
+        // プロパティ(C++側要素)へのアクセス回数を1回に抑えることで計算コストを削減
+        Vector3 playerPos = player.position;
+
+        // new Vector3で直接代入
+        cameraTransform.position = new Vector3(playerPos.x, ySolidPos, playerPos.z);
     }
 }
