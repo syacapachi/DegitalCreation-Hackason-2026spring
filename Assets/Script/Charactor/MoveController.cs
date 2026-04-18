@@ -1,4 +1,4 @@
-﻿using Syacapachi.Attribute;
+using Syacapachi.Attribute;
 using Syacapachi.Controller;
 using UnityEngine;
 
@@ -40,6 +40,9 @@ public class MoveController : MonoBehaviour
     //Vector3 velocity = Vector3.zero;
     private static Vector3 correction = new Vector3(1,0 ,1);
 
+    // プレイヤーの初期位置
+    private Vector3 playerInitialPos;
+
     public bool IsFlying
     {
         get => isFlying;
@@ -56,10 +59,12 @@ public class MoveController : MonoBehaviour
     private void OnEnable()
     {
         reciever.BoostAction += BoostActionHandle;
+        reciever.RespawnAction += RespawnActionHandle;
     }
     private void OnDisable()
     {
         reciever.BoostAction -= BoostActionHandle;
+        reciever.RespawnAction -= RespawnActionHandle;
     }
     private void BoostActionHandle()
     {
@@ -73,6 +78,21 @@ public class MoveController : MonoBehaviour
         rb.linearVelocity = reciever.Camera.transform.up * maxSpeed;
     }
 
+    // リスポーン処理を定義
+    private void RespawnActionHandle()
+    {
+        // 物理エンジンの影響で元に戻らないように、Rigidbody側も直接移動させ、速度をリセットする
+        rb.position = playerInitialPos;
+        playerRootTransform.position = playerInitialPos;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+    }
+
+    private void Start()
+    {
+        //プレイヤーの初期位置を取得
+        playerInitialPos = playerRootTransform.position;
+    }
     
 
     private void Update()
