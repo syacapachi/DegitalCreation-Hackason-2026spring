@@ -9,7 +9,8 @@ public class HomePresenter : MonoBehaviour
     void Start()
     {
         homeView.OnStartClicked += () => SceneManager.LoadScene("GameScene");
-        homeView.OnSettingButtonClicked += OnSettingButtonClicked; 
+        homeView.OnSettingButtonClicked += OnSettingButtonClicked;
+        homeView.OnToRankingButtonClicked += OnToRankingButtonHandler;
     }
 
     // Update is called once per frame
@@ -21,5 +22,10 @@ public class HomePresenter : MonoBehaviour
     private void OnSettingButtonClicked()
     {
         homeView.settingPanel.SetActive(true);
+    }
+
+    private void OnToRankingButtonHandler()
+    {
+        homeView.rankingPanel.SetActive(true);
     }
 }

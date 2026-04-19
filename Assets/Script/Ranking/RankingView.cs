@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class RankingView : MonoBehaviour
 {
     [SerializeField] private Button closeButton;
+    [SerializeField] private Button toRankingButton;
     [SerializeField] public GameObject rankPanel;
     [SerializeField] private GameObject rankingLine;
     [SerializeField] private TextMeshProUGUI rankText;
