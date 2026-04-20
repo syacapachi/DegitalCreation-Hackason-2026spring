@@ -17,7 +17,7 @@ namespace Syacapachi.Controller
         Vector2 lookInput = Vector2.zero;
         private bool canBoost = true;
         [Tooltip("1につき0.1秒待つ")]
-        [SerializeField] int waitCount = 20;
+        [SerializeField] public int waitCount = 20;
         private static WaitForSeconds wait01s = new WaitForSeconds(0.1f);
         private int proggressCount = 0;
 
