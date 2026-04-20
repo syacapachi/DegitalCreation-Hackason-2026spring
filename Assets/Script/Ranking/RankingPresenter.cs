@@ -36,7 +36,9 @@ public class RankingPresenter : MonoBehaviour
         // Modelからデータ取得
         List<RankingData> rankingList = rankingManager.GetRankingData();
 
-        for (int i = 0; i < rankingList.Count; i++)
+        // 表示は最大10件まで（既存のセーブデータが10件を超えている場合の安全策）
+        int displayCount = Mathf.Min(rankingList.Count, 10);
+        for (int i = 0; i < displayCount; i++)
         {
             RankingData data = rankingList[i];
             

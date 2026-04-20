@@ -19,7 +19,8 @@ public class RankingManager : MonoBehaviour
     // 外部（Presenter等）からデータを追加するためのメソッド
     public void AddRankingData(float score, string nickName)
     {
-        if (rankingDataCache == null) rankingDataCache = new RankingArray();
+        // キャッシュが未初期化の場合は、ファイルからロードして既存データを保持する
+        if (rankingDataCache == null) LoadRanking();
 
         RankingData newData = new RankingData
         {
@@ -30,8 +31,11 @@ public class RankingManager : MonoBehaviour
 
         rankingDataCache.rankArray.Add(newData);
         
-        // MVPにおけるModelの役割：データの整理（スコア降順へのソート）
-        rankingDataCache.rankArray = rankingDataCache.rankArray.OrderByDescending(x => x.score).ToList();
+        // MVPにおけるModelの役割：データの整理（スコア降順へのソートと上位10件の保持）
+        rankingDataCache.rankArray = rankingDataCache.rankArray
+            .OrderByDescending(x => x.score)
+            .Take(10)
+            .ToList();
         
         SaveRanking();
     }
