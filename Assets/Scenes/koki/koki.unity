@@ -370,6 +370,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
+--- !u!114 &261526899 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4677478270336928636, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
+  m_PrefabInstance: {fileID: 261526898}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6cb6d3a2a1484a4d8cf57e660474485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Syacapachi.Controller.KeyBoardController
 --- !u!4 &280775954 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4842964582056796468, guid: 9a9b17da01d149e42908aad9b9f4f586, type: 3}
@@ -938,19 +949,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 346099862735334210, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -1783
       objectReference: {fileID: 0}
     - target: {fileID: 346099862735334210, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1461397160735373887, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1461397160735373887, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 2871492850752461770, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: photoManager
@@ -962,23 +973,23 @@ PrefabInstance:
       objectReference: {fileID: 555400071}
     - target: {fileID: 3458062299501780247, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3458062299501780247, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3458062299501780247, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 3641213699400018265, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3641213699400018265, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4037752091565636841, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_Name
@@ -986,7 +997,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4037752091565636841, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4918145815149846171, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_Pivot.x
@@ -1070,11 +1081,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7893414038371555422, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7893414038371555422, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1403,6 +1414,10 @@ PrefabInstance:
       propertyPath: settingPanel
       value: 
       objectReference: {fileID: 828481133216139773}
+    - target: {fileID: 5807626770620897664, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
+      propertyPath: reciever
+      value: 
+      objectReference: {fileID: 261526899}
     - target: {fileID: 7347266986640347411, guid: ead5b309a5c5bd34a9653667fd1f66fc, type: 3}
       propertyPath: audioManager
       value: 
