@@ -1,9 +1,16 @@
 using System;
-using UnityEngine;
 using System.Collections.Generic;
 
-[System.Serializable]
+[Serializable]
 public class RankingData
 {
-    private List<float> scores;
+    public float score;  // スコア
+    public string nickName; // ニックネーム
+    public string timeStamp; // タイムスタンプ
+}
+
+[Serializable]
+public class RankingArray
+{
+    public List<RankingData> rankArray = new List<RankingData>();
 }

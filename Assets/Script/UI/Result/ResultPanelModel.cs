@@ -1,4 +1,4 @@
-﻿using Syacapachi.Camera;
+using Syacapachi.Camera;
 using Syacapachi.Contracts;
 using Syacapachi.Manager;
 using System.Collections.Generic;
@@ -23,5 +23,10 @@ public class ResultPanelModel : MonoBehaviour
     public string ScoreText
     {
         get { return scoreManager.TotalScore.ToString("n1"); }
+    }
+    
+    public float TotalScore
+    {
+        get { return scoreManager.TotalScore; }
     }
 }

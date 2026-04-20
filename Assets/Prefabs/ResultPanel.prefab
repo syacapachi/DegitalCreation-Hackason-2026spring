@@ -1406,6 +1406,8 @@ GameObject:
   - component: {fileID: 2122363092270959487}
   - component: {fileID: 5315040227784260504}
   - component: {fileID: 8906551463615741793}
+  - component: {fileID: 6555763337943769279}
+  - component: {fileID: 7970086957264929841}
   m_Layer: 0
   m_Name: ResultPanelManager
   m_TagString: Untagged
@@ -1441,6 +1443,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResultPanelPresenter
   resultPanelModel: {fileID: 2871492850752461770}
+  rankingPresenter: {fileID: 7970086957264929841}
+  rankingManager: {fileID: 6555763337943769279}
   resultPanelView: {fileID: 8906551463615741793}
 --- !u!114 &8906551463615741793
 MonoBehaviour:
@@ -1461,6 +1465,32 @@ MonoBehaviour:
   scoreManager: {fileID: 0}
   circleSprite: {fileID: -1907716139, guid: bdd809c9a46d36c428e1b17b27a741bd, type: 3}
   imagePrefab: {fileID: 8048345946492802212, guid: cd8154dcab1ae294d9b2ba6adca61df0, type: 3}
+--- !u!114 &6555763337943769279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8551500737600811982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21ff8ef0563c207468e6b5bccae28061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RankingManager
+--- !u!114 &7970086957264929841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8551500737600811982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6caeed3a1a7546144a387688c9589608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RankingPresenter
+  view: {fileID: 0}
+  rankingManager: {fileID: 6555763337943769279}
 --- !u!1 &8988004887636431200
 GameObject:
   m_ObjectHideFlags: 0

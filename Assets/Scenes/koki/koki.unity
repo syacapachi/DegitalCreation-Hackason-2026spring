@@ -834,6 +834,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RankingPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 1972411462210171776, guid: 2456429acd2203d449b54348c7018e65, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2875615616097817326, guid: 2456429acd2203d449b54348c7018e65, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -934,19 +938,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 346099862735334210, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -1783
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 346099862735334210, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1461397160735373887, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1461397160735373887, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2871492850752461770, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: photoManager
@@ -958,23 +962,23 @@ PrefabInstance:
       objectReference: {fileID: 555400071}
     - target: {fileID: 3458062299501780247, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3458062299501780247, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3458062299501780247, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3641213699400018265, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3641213699400018265, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4037752091565636841, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_Name
@@ -982,7 +986,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4037752091565636841, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4918145815149846171, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_Pivot.x
@@ -1066,11 +1070,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7893414038371555422, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7893414038371555422, guid: ec1e86ac95015674eb9ce3a353f8b76a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
