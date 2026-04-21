@@ -7,7 +7,7 @@ using Cysharp.Threading.Tasks;
 
 public class BoostGuageController : MonoBehaviour
 {
-    [SerializeField] private Image guage;
+    [SerializeField] private Image guage;　// boostボタンを押したら0になり、時間で回復する
     [SerializeField] private PlayerInputReciever reciever;
 
     private event Action OnGuageBeZero; 
@@ -20,9 +20,10 @@ public class BoostGuageController : MonoBehaviour
 
     private async void GuageBeZeroHandler()
     {
+        float count = reciever.waitCount;
         // Debug.Log("Guage操作を開始します");
-        guage.DOFillAmount(1f,(float)(reciever.waitCount/10));
-        await UniTask.Delay(reciever.waitCount *100);
+        guage.DOFillAmount(1f,(float)(count/10));
+        await UniTask.Delay((int)(count *100)); //ミリ秒単位
         guage.DOFade(1f,0f);
     }
 

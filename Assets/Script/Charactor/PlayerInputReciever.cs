@@ -10,8 +10,8 @@ namespace Syacapachi.Controller
         [SerializeField] Camera m_camera;
         InputAction moveAction;
         InputAction lookAction;
-        InputAction boostAction;
-        InputAction respawnAction;
+        public InputAction boostAction;
+        public InputAction respawnAction;
 
         Vector2 moveInput = Vector2.zero;
         Vector2 lookInput = Vector2.zero;
@@ -87,12 +87,6 @@ namespace Syacapachi.Controller
                 yield return wait01s;
             }
             canBoost = true;
-        }
-        private void OnGUI()
-        {
-            if (canBoost) return;
-
-            GUI.Label(new Rect(10, 10, 100, 30), $"{proggressCount}");
         }
     }
 }
