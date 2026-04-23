@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [Header("Publish Events")]
     [SerializeField] VoidEventSO OnCountdownStart;
     [SerializeField] VoidEventSO OnCountdownEnd;
+    [SerializeField] VoidEventSO OnFireEventStarted;
     [SerializeField] BurstProgressEvent countDownEvent;
 
     private IMusicPlayer Music => audioManager;
@@ -84,6 +85,12 @@ public class GameManager : MonoBehaviour
             {
                 lastSecond = currentSecond;
                 countDownEvent.Invoke(new Syacapachi.Camera.CameraCapture.BurstProgress(currentSecond, duration));
+
+                // 残り時間が60秒になったら火災イベントを発火
+                if (currentSecond == 60)
+                {
+                    OnFireEventStarted?.Invoke();
+                }
             }
 
             yield return wait025s;
