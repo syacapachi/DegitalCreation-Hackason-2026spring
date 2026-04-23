@@ -33,7 +33,7 @@ RectTransform:
   m_Father: {fileID: 2146499315994823377}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -720,7 +720,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1396378830080081060
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1346,6 +1346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SetttingPresenter
   settingView: {fileID: 6209040873455034817}
   sso: {fileID: 11400000, guid: d12f2a28dcd65aa4fa91ead88fcd8446, type: 2}
+  OnSensitivityValueChanged: {fileID: 11400000, guid: 1f630c54108e5114692623f24c1ae9d7, type: 2}
 --- !u!114 &6209040873455034817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1364,6 +1365,7 @@ MonoBehaviour:
   accelerationKeyText: {fileID: 8220313606773908140}
   rebindOverlay: {fileID: 6481517355578843210}
   settingPanel: {fileID: 4384807614158658026}
+  onSensitivityValueChangeEvent: {fileID: 11400000, guid: 1f630c54108e5114692623f24c1ae9d7, type: 2}
 --- !u!1 &5546426306898968329
 GameObject:
   m_ObjectHideFlags: 0
@@ -1783,8 +1785,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3157915702888265573}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

@@ -842,6 +842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Syacapachi.Controller.MouseCameraController
   reciever: {fileID: 4677478270336928636}
+  sso: {fileID: 11400000, guid: d12f2a28dcd65aa4fa91ead88fcd8446, type: 2}
   mouseSensitivity: 1
   yMinLimit: -89
   yMaxLimit: 89
