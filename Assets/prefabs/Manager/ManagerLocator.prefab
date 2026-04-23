@@ -291,6 +291,7 @@ MonoBehaviour:
   initialCountdown: 100
   OnCountdownStart: {fileID: 11400000, guid: 783026d05d7880e419bbc986eb5951df, type: 2}
   OnCountdownEnd: {fileID: 11400000, guid: f138bd7798e01c24d9e0f4f2c90c0788, type: 2}
+  OnFireEventStarted: {fileID: 11400000, guid: 32a0f880e9999e849831babf41d19f8d, type: 2}
   countDownEvent: {fileID: 11400000, guid: e456b54036885014783b19b4eefb28ca, type: 2}
   debugCountdownDuration: 10
 --- !u!1 &7242288508969226001

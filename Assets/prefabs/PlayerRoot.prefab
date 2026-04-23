@@ -530,7 +530,7 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 4294967295
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
@@ -810,6 +810,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Syacapachi.Controller.KeyBoardController
   m_camera: {fileID: 7430668895365547992}
+  boostAction:
+    m_Name: Boost
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 175ffd86-730c-41c6-bbda-5e71e7debe45
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  respawnAction:
+    m_Name: Respawn
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 75d338f6-5c40-4e6a-92db-42f5203f5777
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   waitCount: 20
 --- !u!114 &7022332135860818128
 MonoBehaviour:
@@ -1079,7 +1097,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 25
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1164,7 +1182,7 @@ MonoBehaviour:
   mapCamera: {fileID: 8789990368584329716}
   initialPos: {x: 0, y: 0, z: 0}
   player: {fileID: 4842964582056796468}
-  ySolidPos: 80
+  ySolidPos: 60
 --- !u!1 &7645917584006079110
 GameObject:
   m_ObjectHideFlags: 0
