@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 
 /// <summary>
-/// 火災イベントを発生させるイベントに関連したスクリプト
+/// 火災イベントを発生させるイベントに関連したクラス
 /// </summary>
 public class FireSpawner : MonoBehaviour
 {
@@ -27,8 +27,14 @@ public class FireSpawner : MonoBehaviour
 
     void Awake()
     {
-        OnFireEventStarted.Register(SpawnFire);
-        OnFireEventCaptured.Register(VanishFire);
+        if (OnFireEventStarted != null) OnFireEventStarted.Register(SpawnFire);
+        if (OnFireEventCaptured != null) OnFireEventCaptured.Register(VanishFire);
+    }
+
+    void OnDestroy()
+    {
+        if (OnFireEventStarted != null) OnFireEventStarted.Unregister(SpawnFire);
+        if (OnFireEventCaptured != null) OnFireEventCaptured.Unregister(VanishFire);
     }
 
     /// <summary>
