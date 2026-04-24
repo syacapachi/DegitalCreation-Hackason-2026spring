@@ -27,6 +27,7 @@ public class UIPresenter : MonoBehaviour
     [SerializeField] VoidEventSO OnCountdownEnd;
     [SerializeField] BurstProgressEvent countDownEvent;
     [SerializeField] VoidEventSO OnFireEventCaptured;
+    [SerializeField] VoidEventSO OnPhotoReachMax;
 
     private UIModelSetting _model;
     [SerializeField]private PhotoScoreManager _photoScoreManager;
@@ -67,7 +68,10 @@ public class UIPresenter : MonoBehaviour
         OnBurstProgress.Register(BurstProgressHandle);
         OnCountdownEnd.Register(()=>SetResultPanelActive(true)); //カウントダウン終了時の処理)
         countDownEvent.Register(t => UpdateCountdownDisplay(t.current,t.total));
+        OnPhotoReachMax.Register(ShowGameEndButton);
     }
+
+    
     private void OnDisable()
     {
         OnShutter.Unregister(OnShuterHandle);
@@ -75,7 +79,19 @@ public class UIPresenter : MonoBehaviour
         OnBurstProgress.Unregister(BurstProgressHandle);
         OnCountdownEnd.Unregister(() => SetResultPanelActive(true));
         countDownEvent.Unregister(t => UpdateCountdownDisplay(t.current, t.total));
+        OnPhotoReachMax.Unregister(ShowGameEndButton);
     }
+
+    /// <summary>
+    /// 写真を早く撮り終えたときに任意で押せるゲーム終了ボタンを表示
+    /// </summary>
+    private void ShowGameEndButton()
+    {
+        //カウントダウン終了後と同様の処理を実行するリスナーを追加
+        uiView.gameEndButton.GetComponent<Button>().onClick.AddListener(()=>OnCountdownEnd?.Invoke()); 
+        uiView.gameEndButton.SetActive(true);
+    }
+
     private void OnShuterHandle()
     {
         ShutterAnimation().Forget();

@@ -12,6 +12,7 @@ public class UIView : MonoBehaviour
     [SerializeField] private GameObject batteryGuage;
     [SerializeField] public GameObject bonusPanel;
     [SerializeField] public TextMeshProUGUI bonusText;
+    [SerializeField] public GameObject gameEndButton;
 
     public void SetCountdownText(string text)
     {

@@ -14,6 +14,9 @@
         public bool IsMaxPhotos => photos.Count >= maxPhotos;
         private readonly List<CameraCapture.PhotoData> photos = new();
 
+        [Header("Event")]
+        [SerializeField] VoidEventSO OnPhotoReachMax;
+
         public bool AddPhoto(CameraCapture.PhotoData photoInfo, bool overwriteOld = false)
         {
             if (photos.Count >= MaxPhotos)
@@ -26,6 +29,7 @@
                 else
                 {
                     Debug.Log("保存上限です");
+                    OnPhotoReachMax?.Invoke();
                     return false;
                 }
             }
