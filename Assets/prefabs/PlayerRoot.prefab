@@ -583,6 +583,7 @@ MonoBehaviour:
   OnCaptureFailed: {fileID: 11400000, guid: 67237fd0e4c3f5d48970d593a750cae2, type: 2}
   OnBurstProgress: {fileID: 11400000, guid: bcbdf62d569e3c64385b67d148d22e57, type: 2}
   OnBurstFinished: {fileID: 11400000, guid: 5a3231514e53298419764fcf87b3deab, type: 2}
+  OnFireEventCaptured: {fileID: 11400000, guid: db04cd65345d40d418157540871b3312, type: 2}
 --- !u!1 &4130948584327729782
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,6 +860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoveController
   reciever: {fileID: 4677478270336928636}
+  mainCamera: {fileID: 7430668895365547992}
   playerRootTransform: {fileID: 4842964582056796468}
   rb: {fileID: 3640116824584658706}
   moveSpeed: 5
@@ -6185,6 +6187,7 @@ MonoBehaviour:
   scoreManager: {fileID: 0}
   scoreCalcrator: {fileID: 0}
   maxPhotos: 20
+  OnPhotoReachMax: {fileID: 11400000, guid: c43086f08aaef444a91395ab2e136141, type: 2}
 --- !u!1 &9179052812986909061
 GameObject:
   m_ObjectHideFlags: 0
