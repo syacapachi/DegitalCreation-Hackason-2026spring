@@ -5,6 +5,7 @@ using UnityEngine;
 public class MoveController : MonoBehaviour
 {
     [SerializeField] PlayerInputReciever reciever;
+    [SerializeField] private Camera mainCamera;
     [Header("MoveSetting")]
     [SerializeField] Transform playerRootTransform;
     [SerializeField] Rigidbody rb;
@@ -86,6 +87,7 @@ public class MoveController : MonoBehaviour
         playerRootTransform.position = playerInitialPos;
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+        mainCamera.transform.rotation = new Quaternion(0,0,0,0); //カメラの方向を正面に調整する
     }
 
     private void Start()

@@ -15,7 +15,7 @@ public class SetttingPresenter : MonoBehaviour
         // アクションの参照を取得
         _boostAction = InputSystem.actions[ActionName];
 
-        settingView.mouseSensitivitySlider.value = sso.MouseSensitivity; 
+        settingView.mouseSensitivitySlider.value = sso.MouseSensitivity; // バーの位置を初期化 
         
         // 保存された設定をロードして適用
         LoadAndApplySettings();

@@ -44,11 +44,11 @@ public class FireSpawner : MonoBehaviour
     private async void ShowMessage()
     {
         messageText.text = $"火災が発生したようだ！\n 写真に撮ってボーナスをゲットしよう！";
-        canvasGroup.GetComponent<Image>().DOFade(0f, 0f);
+        canvasGroup.DOFade(0f, 0f);
         messagePanel.SetActive(true);
-        canvasGroup.GetComponent<Image>().DOFade(0.7f, 0.5f);
+        canvasGroup.DOFade(0.9f, 0.5f);
         await UniTask.Delay(3000);
-        canvasGroup.GetComponent<Image>().DOFade(0f, 0.5f);
+        canvasGroup.DOFade(0f, 0.5f);
         await UniTask.Delay(500);
         messagePanel.SetActive(false);
     }

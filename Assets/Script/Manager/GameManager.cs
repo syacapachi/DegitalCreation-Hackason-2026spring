@@ -89,7 +89,14 @@ public class GameManager : MonoBehaviour
                 // 残り時間が60秒になったら火災イベントを発火
                 if (currentSecond == 60)
                 {
-                    OnFireEventStarted?.Invoke();
+                    try
+                    {
+                        OnFireEventStarted?.Invoke();
+                    }
+                    catch (System.Exception e)
+                    {
+                        Debug.LogError($"火災イベントの実行中にエラーが発生しましたが、カウントダウンは継続します: {e}");
+                    }
                 }
             }
 
