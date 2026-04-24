@@ -6,6 +6,11 @@ public class MoveController : MonoBehaviour
 {
     [SerializeField] PlayerInputReciever reciever;
     [SerializeField] private Camera mainCamera;
+    
+    [Header("Respawn Setting")]
+    [Tooltip("このコライダー（指定範囲）から出たらリスポーンする")]
+    [SerializeField] private Collider respawnAreaCollider;
+    
     [Header("MoveSetting")]
     [SerializeField] Transform playerRootTransform;
     [SerializeField] Rigidbody rb;
@@ -182,5 +187,18 @@ public class MoveController : MonoBehaviour
     private void Reset()
     {
         reciever = GetComponent<PlayerInputReciever>();
+    }
+
+    /// <summary>
+    /// colliderでOnTriggerExitを使って出たときに初期位置に戻る
+    /// </summary>
+    private void OnTriggerExit(Collider collider)
+    {
+        // Inspectorで設定したコライダーから出た場合のみリスポーンする
+        if (respawnAreaCollider != null && collider == respawnAreaCollider)
+        {
+            Debug.Log("指定の範囲コライダーから出たためリスポーンします");
+            RespawnActionHandle();
+        }
     }
 }
