@@ -76,13 +76,13 @@ public class TipManager : MonoBehaviour
 
     private async void PlayerPosRecorder()
     {
-        Debug.Log("PlayerPosRecorder()が実行された");
+        // Debug.Log("PlayerPosRecorder()が実行された");
         posList = new List<Vector3>();
         int i = 0;
         
         while(isFinished == false)
         {
-            Debug.Log("while文にはいった");
+            // Debug.Log("while文にはいった");
             
             if (playerPos == null) break; // オブジェクト破棄時のエラー防止
 

@@ -261,10 +261,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Settings
+  m_text: "\u8A2D\u5B9A"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 32ce48195aae88f4584de1f014a010b0, type: 2}
+  m_sharedMaterial: {fileID: 410742410309821088, guid: 32ce48195aae88f4584de1f014a010b0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -288,7 +288,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 69.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1332,6 +1332,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a163eac9cbb614193e0e2bdc432d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingManager
+  sso: {fileID: 11400000, guid: d12f2a28dcd65aa4fa91ead88fcd8446, type: 2}
+  settingData:
+    MouseSensitivity: 0
+    AccelerationBindingPath: 
 --- !u!114 &4440827190123381303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1346,6 +1350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SetttingPresenter
   settingView: {fileID: 6209040873455034817}
   sso: {fileID: 11400000, guid: d12f2a28dcd65aa4fa91ead88fcd8446, type: 2}
+  OnSensitivityValueChanged: {fileID: 11400000, guid: 1f630c54108e5114692623f24c1ae9d7, type: 2}
 --- !u!114 &6209040873455034817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1364,6 +1369,7 @@ MonoBehaviour:
   accelerationKeyText: {fileID: 8220313606773908140}
   rebindOverlay: {fileID: 6481517355578843210}
   settingPanel: {fileID: 4384807614158658026}
+  onSensitivityValueChangeEvent: {fileID: 11400000, guid: 1f630c54108e5114692623f24c1ae9d7, type: 2}
 --- !u!1 &5546426306898968329
 GameObject:
   m_ObjectHideFlags: 0

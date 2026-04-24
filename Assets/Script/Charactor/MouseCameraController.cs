@@ -6,6 +6,7 @@
     {
         [SerializeField] PlayerInputReciever reciever;
         [Header("Camra Setting")]
+        [SerializeField] private SettingSO sso;
         [SerializeField] float mouseSensitivity = 1f;
         [SerializeField] float yMinLimit = -89f;
         [SerializeField] float yMaxLimit = 89f;
@@ -13,6 +14,7 @@
 
         private void OnEnable()
         {
+            mouseSensitivity = sso.MouseSensitivity;
             Vector3 angle = reciever.Camera.transform.eulerAngles;
             //xとyを入れ替える。これにより、カメラの回転がプレイヤーの入力に対して正しく反応するようになる。
             cameraAngle.x = angle.y;

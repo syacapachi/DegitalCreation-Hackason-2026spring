@@ -5,7 +5,7 @@ public class SetttingPresenter : MonoBehaviour
 {
     [SerializeField] private SettingView settingView;
     [SerializeField] private SettingSO sso;
-
+    [SerializeField] private FloatEventSO OnSensitivityValueChanged;
     private InputAction _boostAction;
     private const string ActionName = "Accelarate"; // 現状のスペルミスを維持
     private const string SaveKeySuffix = "_BindingPath";
@@ -14,6 +14,8 @@ public class SetttingPresenter : MonoBehaviour
     {
         // アクションの参照を取得
         _boostAction = InputSystem.actions[ActionName];
+
+        settingView.mouseSensitivitySlider.value = sso.MouseSensitivity; // バーの位置を初期化 
         
         // 保存された設定をロードして適用
         LoadAndApplySettings();
@@ -23,6 +25,7 @@ public class SetttingPresenter : MonoBehaviour
     {
         settingView.OnSaveButton += SaveSettings;
         settingView.OnAccelerationKeyButtonClick += StartRebinding;
+        OnSensitivityValueChanged.Register(SensitivityValueHandler);
         
         UpdateView();
     }
@@ -31,6 +34,7 @@ public class SetttingPresenter : MonoBehaviour
     {
         settingView.OnSaveButton -= SaveSettings;
         settingView.OnAccelerationKeyButtonClick -= StartRebinding;
+        OnSensitivityValueChanged.Unregister(SensitivityValueHandler);
     }
 
     private void LoadAndApplySettings()
@@ -107,5 +111,10 @@ public class SetttingPresenter : MonoBehaviour
         _boostAction.Enable();
         settingView.ShowRebindOverlay(false);
         UpdateView();
+    }
+
+    private void SensitivityValueHandler(float value)
+    {
+        sso.MouseSensitivity = value;
     }
 }

@@ -5,18 +5,13 @@ using UnityEngine.UI;
 public class HomePresenter : MonoBehaviour
 {
     [SerializeField] public HomeView homeView;
+    [SerializeField] private SettingManager settingManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         homeView.OnStartClicked += () => SceneManager.LoadScene("GameScene");
         homeView.OnSettingButtonClicked += OnSettingButtonClicked;
         homeView.OnToRankingButtonClicked += OnToRankingButtonHandler;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnSettingButtonClicked()

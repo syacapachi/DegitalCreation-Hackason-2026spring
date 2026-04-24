@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -6,6 +6,7 @@ using Syacapachi.Attribute;
 using Syacapachi.Camera;
 using Syacapachi.Contracts;
 using Syacapachi.Manager;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static Syacapachi.Camera.CameraCapture;
@@ -25,17 +26,32 @@ public class UIPresenter : MonoBehaviour
     [SerializeField] VoidEventSO OnCountdownStart;
     [SerializeField] VoidEventSO OnCountdownEnd;
     [SerializeField] BurstProgressEvent countDownEvent;
+    [SerializeField] VoidEventSO OnFireEventCaptured;
 
     private UIModelSetting _model;
+    [SerializeField]private PhotoScoreManager _photoScoreManager;
 
     private IPhotoAlbum Album => photoManager;
 
     
-    void Awake()
+    async void Awake()
     {
         _model = new UIModelSetting();
-
+        OnFireEventCaptured.Register(ShowBonusPanel);
        
+    }
+
+    private async void ShowBonusPanel()
+    {
+        GameObject panel = uiView.bonusPanel;
+        TextMeshProUGUI text = uiView.bonusText;
+        text.text = $"火災現場の撮影に成功！\n +{_photoScoreManager.FireBonus}点";
+        panel.GetComponent<Image>().DOFade(0f, 0f);
+        panel.SetActive(true);
+        panel.GetComponent<Image>().DOFade(1f, 0.5f);
+        await UniTask.Delay(2000);
+        panel.GetComponent<Image>().DOFade(0f, 0.5f);
+        panel.SetActive(false);
     }
 
     private void Start()
