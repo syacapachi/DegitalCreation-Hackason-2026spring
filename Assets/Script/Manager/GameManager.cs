@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     private void HandleFirstBoost()
     {
-        Debug.Log("[GameManager] 最初のブーストを検知。BGMを開始します。");
+        // Debug.Log("[GameManager] 最初のブーストを検知。BGMを開始します。");
         Music.PlayBackgroundMusic();
 
         // 最初の1回のみ実行するため、自身をイベントから削除

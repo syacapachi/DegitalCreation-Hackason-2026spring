@@ -41,6 +41,13 @@ public class MoveController : MonoBehaviour
     //Vector3 velocity = Vector3.zero;
     private static Vector3 correction = new Vector3(1,0 ,1);
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void Init()
+    {
+        correction = new Vector3(1, 0, 1);
+    }
+
+
     // プレイヤーの初期位置
     private Vector3 playerInitialPos;
 

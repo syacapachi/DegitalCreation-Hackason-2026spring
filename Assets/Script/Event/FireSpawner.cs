@@ -12,17 +12,23 @@ using Cysharp.Threading.Tasks;
 /// </summary>
 public class FireSpawner : MonoBehaviour
 {
-    [SerializeField] private VoidEventSO OnFireEventStarted; // 火災イベント発生
+    
     [SerializeField] private GameObject fireEffect;
     [SerializeField] private GameObject messagePanel;
     [SerializeField] private TextMeshProUGUI messageText;
     [SerializeField] private List<Vector3> firePosLists; // 火災が発生する場所の座標をまとめたリスト
     [SerializeField] private CanvasGroup canvasGroup;
-    
+
+    [Header("Event")]
+    [SerializeField] private VoidEventSO OnFireEventStarted; // 火災イベント発生
+    [SerializeField] private VoidEventSO OnFireEventCaptured; // 火災イベントが撮影された
+
+
 
     void Awake()
     {
         OnFireEventStarted.Register(SpawnFire);
+        OnFireEventCaptured.Register(VanishFire);
     }
 
     /// <summary>
@@ -68,5 +74,10 @@ public class FireSpawner : MonoBehaviour
             // Eventが設定されていない場合は直接実行するなどのフォールバック
             SpawnFire();
         }
+    }
+
+    private void VanishFire()
+    {
+        fireEffect.SetActive(false);
     }
 }
