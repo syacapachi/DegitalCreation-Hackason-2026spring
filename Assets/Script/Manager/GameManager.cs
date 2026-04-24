@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    
+
     private void HandleFirstBoost()
     {
         // Debug.Log("[GameManager] 最初のブーストを検知。BGMを開始します。");
