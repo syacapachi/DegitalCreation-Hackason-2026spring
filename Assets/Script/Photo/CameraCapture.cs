@@ -263,6 +263,7 @@ namespace Syacapachi.Camera
                 if(info.targetType == PhotoTargetType.FireEvent) //イベントタイプがFireEventのとき
                 {
                     OnFireEventCaptured?.Invoke();
+                    Debug.Log("OnFireEventCapturedが発火しました");
                 }
             }
         }
