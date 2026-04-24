@@ -36,12 +36,6 @@ public class AmbientController : MonoBehaviour {
 		lightBaseRotation = lightObject.transform.localEulerAngles;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-
 	public void rotateAmbientLight (float angleAddRotation) {
 
 		lightObject.transform.localEulerAngles = new Vector3 (lightBaseRotation.x + angleAddRotation, lightBaseRotation.y, lightBaseRotation.z);

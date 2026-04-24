@@ -1,8 +1,9 @@
-﻿namespace Syacapachi.Camera
+namespace Syacapachi.Camera
 {
     using Syacapachi.Attribute;
     using Syacapachi.Contracts;
     using Syacapachi.Utils;
+    using Syacapachi.ScriptableObject;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -91,6 +92,7 @@
         [SerializeField] VoidEventSO OnCaptureFailed;
         [SerializeField] BurstProgressEvent OnBurstProgress;
         [SerializeField] VoidEventSO OnBurstFinished;
+        [SerializeField] VoidEventSO OnFireEventCaptured;
         // =========================
         // 🎯 イベント（全部メインスレッド）
         // =========================
@@ -239,6 +241,7 @@
             if (result.success)
             {
                 OnCaptureComplete?.Invoke(data);
+                JudgeObjectType(visibleObj);
             }
             else
             {
@@ -250,6 +253,18 @@
             foreach(var info in infos)
             {
                 Debug.Log($"{info}");
+            }
+        }
+
+        private void JudgeObjectType(HashSet<PhotoAnalyzer.PhotoObjectInfo> infos)
+        {
+            foreach (var info in infos)
+            {
+                if(info.targetType == PhotoTargetType.FireEvent) //イベントタイプがFireEventのとき
+                {
+                    OnFireEventCaptured?.Invoke();
+                    Debug.Log("OnFireEventCapturedが発火しました");
+                }
             }
         }
         private void Reset()

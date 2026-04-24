@@ -765,6 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HomePresenter
   homeView: {fileID: 992773256}
+  settingManager: {fileID: 0}
 --- !u!1001 &1013857667
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -853,9 +854,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4033589282274375130, guid: 0512fc4782e63354ab3237c259978975, type: 3}
+      propertyPath: homeView
+      value: 
+      objectReference: {fileID: 992773256}
+    - target: {fileID: 4033589282274375130, guid: 0512fc4782e63354ab3237c259978975, type: 3}
+      propertyPath: settingView
+      value: 
+      objectReference: {fileID: 1222332411}
     - target: {fileID: 4384807614158658026, guid: 0512fc4782e63354ab3237c259978975, type: 3}
       propertyPath: m_Name
       value: SettingPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384807614158658026, guid: 0512fc4782e63354ab3237c259978975, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481047901169073598, guid: 0512fc4782e63354ab3237c259978975, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481047901169073598, guid: 0512fc4782e63354ab3237c259978975, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481047901169073598, guid: 0512fc4782e63354ab3237c259978975, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7855484783476571577, guid: 0512fc4782e63354ab3237c259978975, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7855484783476571577, guid: 0512fc4782e63354ab3237c259978975, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1230,6 +1263,17 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &1222332411 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6209040873455034817, guid: 0512fc4782e63354ab3237c259978975, type: 3}
+  m_PrefabInstance: {fileID: 1013857667}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 296b2d6f3598fb840b8a654ffccf14e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingView
 --- !u!1 &1313903217 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4384807614158658026, guid: 0512fc4782e63354ab3237c259978975, type: 3}

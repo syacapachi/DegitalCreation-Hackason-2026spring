@@ -32,12 +32,6 @@ public class ZRNGUIController : MonoBehaviour {
 		SetQueryChan(0);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-
 	void OnGUI () {
 
 		if (menuVisible == true)

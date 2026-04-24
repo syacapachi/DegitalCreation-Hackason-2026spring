@@ -12,8 +12,6 @@ public class SettingSO : ScriptableObject
     public int BGMVolume {  get { return bgmVolume; } set { bgmVolume = value; } }
     public int SEVolume { get { return seVolume; } set { seVolume = value; } }
     public float Brightness {  get { return brightness; } set { brightness = value; } }
-
-    //マウス感度についてシーンを跨ぐ可能性があるのでSettingSOに保存して使えるようにする
     public float MouseSensitivity { get { return mouseSensitivity; } set { mouseSensitivity = value; } }
     
     // 加速ボタンのバインディングパス

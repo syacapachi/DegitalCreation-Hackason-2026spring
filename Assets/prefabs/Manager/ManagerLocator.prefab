@@ -392,6 +392,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Syacapachi.Manager.PhotoScoreManager
   calcrator: {fileID: 6286607819170200367}
   totalScore: 0
+  bonusScore: 0
+  fireBonus: 1000
+  OnFireEventCaptured: {fileID: 11400000, guid: db04cd65345d40d418157540871b3312, type: 2}
 --- !u!114 &6286607819170200367
 MonoBehaviour:
   m_ObjectHideFlags: 0

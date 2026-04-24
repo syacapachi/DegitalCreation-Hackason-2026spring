@@ -5,6 +5,7 @@ using UnityEngine;
 public class MoveController : MonoBehaviour
 {
     [SerializeField] PlayerInputReciever reciever;
+    [SerializeField] private Camera mainCamera;
     [Header("MoveSetting")]
     [SerializeField] Transform playerRootTransform;
     [SerializeField] Rigidbody rb;
@@ -39,6 +40,13 @@ public class MoveController : MonoBehaviour
 
     //Vector3 velocity = Vector3.zero;
     private static Vector3 correction = new Vector3(1,0 ,1);
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void Init()
+    {
+        correction = new Vector3(1, 0, 1);
+    }
+
 
     // プレイヤーの初期位置
     private Vector3 playerInitialPos;
@@ -86,6 +94,7 @@ public class MoveController : MonoBehaviour
         playerRootTransform.position = playerInitialPos;
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+        mainCamera.transform.rotation = new Quaternion(0,0,0,0); //カメラの方向を正面に調整する
     }
 
     private void Start()
