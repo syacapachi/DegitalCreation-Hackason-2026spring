@@ -15,6 +15,6 @@ public class SpeedMeter : MonoBehaviour
     private void ShowSpeed()
     {
         float height = (float)Math.Round(rb.linearVelocity.magnitude * 3.6f, 1, MidpointRounding.AwayFromZero);
-        heightText.text = $"{height.ToString()}km/s";
+        heightText.text = $"{height.ToString()}km/h";
     }
 }
